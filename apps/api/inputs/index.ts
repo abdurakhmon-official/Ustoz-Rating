@@ -7,5 +7,6 @@ export * from "./basic.search";
 export * from "./geo.input";
 export * from "./question.input";
 export * from "./subject.input";
+export * from "./test-attempt.input";
 export * from "./test.input";
 export * from "./user.input";

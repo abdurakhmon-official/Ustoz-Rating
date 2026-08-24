@@ -5,6 +5,7 @@ import type {
   CreateQuestionInput,
   CreateTestInput,
   ImportQuestionsResult,
+  PublishedTestListItem,
   QuestionOutput,
   UpdateTestInput,
 } from '@repo/contracts';
@@ -17,6 +18,10 @@ export class TestService extends BaseService<AdminTestDetail, CreateTestInput, U
 
   async list(query: Partial<AdminTestQuery> = {}): Promise<Paged<AdminTestListItem>> {
     return this.sendGetPaged<AdminTestListItem>('', query);
+  }
+
+  async listPublished(subjectId?: string) {
+    return this.sendGet<PublishedTestListItem[]>('/published', subjectId ? { subjectId } : {});
   }
 
   override async update(testId: string, input: UpdateTestInput) {

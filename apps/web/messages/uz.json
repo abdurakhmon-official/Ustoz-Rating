@@ -5,6 +5,8 @@
     "signUp": "Ro'yxatdan o'tish",
     "signOut": "Chiqish",
     "profile": "Profilim",
+    "tests": "Testlar",
+    "attempts": "Natijalarim",
     "admin": "Admin panel",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish"
@@ -76,6 +78,61 @@
     "saving": "Saqlanmoqda…",
     "emailVerified": "Email tasdiqlangan",
     "emailNotVerified": "Email tasdiqlanmagan"
+  },
+  "tests": {
+    "title": "Testlar",
+    "allSubjects": "Barcha fanlar",
+    "empty": "Hozircha testlar yo'q",
+    "questionCount": "{count} ta savol",
+    "duration": "{minutes} daqiqa",
+    "passingScore": "O'tish bali: {score}%",
+    "start": "Testni boshlash",
+    "info": {
+      "subject": "Fan",
+      "questions": "Savollar",
+      "duration": "Vaqt",
+      "passingScore": "O'tish bali"
+    }
+  },
+  "attempts": {
+    "title": "Testlarim tarixi",
+    "empty": "Siz hali test topshirmadingiz",
+    "viewDetail": "Batafsil",
+    "status": {
+      "passed": "O'TDI",
+      "failed": "O'TMADI"
+    },
+    "take": {
+      "question": "{current}-savol / {total}",
+      "timeLeft": "Qolgan vaqt",
+      "previous": "Oldingi",
+      "next": "Keyingi",
+      "finish": "Yakunlash",
+      "confirmFinish": "Testni yakunlaysizmi? Javob berilmagan savollar noto'g'ri hisoblanadi.",
+      "timeUpTitle": "Vaqt tugadi",
+      "timeUpMessage": "Test avtomatik yakunlandi.",
+      "submitting": "Yuborilmoqda…",
+      "unanswered": "Bu savolga javob berilmagan"
+    },
+    "result": {
+      "title": "Test natijasi",
+      "passedMessage": "Tabriklaymiz, testdan o'tdingiz!",
+      "failedMessage": "Afsuski, testdan o'ta olmadingiz",
+      "totalQuestions": "Jami savollar",
+      "correct": "To'g'ri",
+      "incorrect": "Noto'g'ri",
+      "percent": "Foiz",
+      "timeSpent": "Sarflangan vaqt",
+      "backToTests": "Testlarga qaytish",
+      "viewHistory": "Tarixni ko'rish"
+    },
+    "detail": {
+      "title": "Test natijasi tafsiloti",
+      "yourAnswer": "Sizning javobingiz",
+      "notAnswered": "Javob berilmagan",
+      "correct": "To'g'ri",
+      "incorrect": "Noto'g'ri"
+    }
   },
   "admin": {
     "nav": {
@@ -219,6 +276,12 @@
     "IMPORT_ROW_TEXT_EMPTY": "Savol matni bo'sh",
     "IMPORT_ROW_OPTIONS_INCOMPLETE": "Barcha 4 ta variant to'ldirilishi kerak",
     "IMPORT_ROW_ANSWER_INVALID": "To'g'ri javob A, B, C yoki D bo'lishi kerak",
+    "AUTH_EMAIL_NOT_VERIFIED": "Test topshirish uchun avval emailingizni tasdiqlang",
+    "ATTEMPT_NOT_FOUND": "Urinish topilmadi",
+    "ATTEMPT_FORBIDDEN": "Bu urinish sizga tegishli emas",
+    "ATTEMPT_ALREADY_SUBMITTED": "Bu urinish allaqachon yakunlangan",
+    "ATTEMPT_TIME_EXPIRED": "Test uchun ajratilgan vaqt tugadi",
+    "ATTEMPT_SUBMITTED": "Test natijasi qabul qilindi",
     "VALIDATION_PASSWORD_SHORT": "Parol juda qisqa",
     "VALIDATION_PASSWORD_LONG": "Parol juda uzun",
     "VALIDATION_PASSWORD_PERSONAL": "Parol ismingiz yoki emailingizni o'z ichiga olmasligi kerak",

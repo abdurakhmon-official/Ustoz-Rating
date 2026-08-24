@@ -8,5 +8,6 @@ export * from "./geo.controller";
 export * from "./health.controller";
 export * from "./question.controller";
 export * from "./subject.controller";
+export * from "./test-attempt.controller";
 export * from "./test.controller";
 export * from "./user.controller";

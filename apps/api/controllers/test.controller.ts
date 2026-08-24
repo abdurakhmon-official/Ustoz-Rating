@@ -6,11 +6,12 @@ import { CreateTestInputSchema, UpdateTestInputSchema } from '@/inputs/test.inpu
 import type { CreateTestInput, UpdateTestInput } from '@/inputs/test.input';
 import { CreateQuestionInputSchema } from '@/inputs/question.input';
 import type { CreateQuestionInput } from '@/inputs/question.input';
-import { AdminOnly, Authorized } from '@/middlewares/auth.middleware';
+import { AdminOnly, Authenticate, Authorized } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { TestService } from '@/services/test.service';
 import { QuestionService } from '@/services/question.service';
 import { QuestionImportService } from '@/services/question-import.service';
+import { TestAttemptService } from '@/services/test-attempt.service';
 
 @Controller('/tests')
 export class TestController {
@@ -25,10 +26,19 @@ export class TestController {
   @Inject()
   private questionImportService!: QuestionImportService;
 
+  @Inject()
+  private testAttemptService!: TestAttemptService;
+
   @Get('/')
   @Authorized(AdminOnly())
   async list(@QueryParams() query: Record<string, unknown>) {
     return this.testService.adminList(query);
+  }
+
+  @Get('/published')
+  @Authorized(Authenticate())
+  async listPublished(@QueryParams('subjectId') subjectId?: string) {
+    return this.testAttemptService.listPublished(subjectId);
   }
 
   @Get('/:testId')

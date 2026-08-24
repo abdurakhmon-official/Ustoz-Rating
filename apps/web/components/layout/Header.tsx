@@ -31,6 +31,20 @@ export function Header() {
 
           {isAuthenticated ? (
             <>
+              {user?.role === 'TEACHER' && (
+                <>
+                  <Link href="/tests">
+                    <Button variant="ghost" size="sm">
+                      {t('tests')}
+                    </Button>
+                  </Link>
+                  <Link href="/attempts">
+                    <Button variant="ghost" size="sm">
+                      {t('attempts')}
+                    </Button>
+                  </Link>
+                </>
+              )}
               <Link href="/profile">
                 <Button variant="ghost" size="sm">
                   {t('profile')}
@@ -81,6 +95,20 @@ export function Header() {
           <nav className="flex flex-col gap-1">
             {isAuthenticated ? (
               <>
+                {user?.role === 'TEACHER' && (
+                  <>
+                    <Link href="/tests" onClick={closeMenu}>
+                      <Button variant="ghost" size="sm" className="w-full justify-start">
+                        {t('tests')}
+                      </Button>
+                    </Link>
+                    <Link href="/attempts" onClick={closeMenu}>
+                      <Button variant="ghost" size="sm" className="w-full justify-start">
+                        {t('attempts')}
+                      </Button>
+                    </Link>
+                  </>
+                )}
                 <Link href="/profile" onClick={closeMenu}>
                   <Button variant="ghost" size="sm" className="w-full justify-start">
                     {t('profile')}

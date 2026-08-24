@@ -19,6 +19,10 @@ export const routing = defineRouting({
     '/admin/tests': '/admin/tests',
     '/admin/tests/new': '/admin/tests/new',
     '/admin/tests/[testId]': '/admin/tests/[testId]',
+    '/tests': '/tests',
+    '/tests/[testId]': '/tests/[testId]',
+    '/attempts': '/attempts',
+    '/attempts/[attemptId]': '/attempts/[attemptId]',
   },
 });
 
