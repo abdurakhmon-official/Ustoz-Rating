@@ -20,6 +20,7 @@ import {
 } from '@/modules/storage';
 import { uuid } from '@/utils';
 import { badRequest } from '@/utils/errors.utils';
+import { uz } from '@/i18n/messages/uz.messages';
 import { matchesDeclaredMimeType } from '@/utils/mime-sniff.utils';
 import {
   ALLOWED_MIME_BY_FOLDER,
@@ -157,7 +158,7 @@ export class S3Service {
     return {
       success: true,
       _code: 'FILE_UPLOADED',
-      _message: 'file uploaded',
+      _message: uz.FILE_UPLOADED,
       data: {
         key,
         url: assetUrl(key),

@@ -27,6 +27,8 @@ export const routing = defineRouting({
     '/attempts/[attemptId]': '/attempts/[attemptId]',
     '/rating': '/rating',
     '/admin/rating-settings': '/admin/rating-settings',
+    '/certificates/[certificateId]': '/certificates/[certificateId]',
+    '/admin/certificate-template': '/admin/certificate-template',
   },
 });
 

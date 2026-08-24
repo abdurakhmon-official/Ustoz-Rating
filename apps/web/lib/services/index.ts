@@ -1,4 +1,5 @@
 export * from './auth.service';
+export * from './certificate.service';
 export * from './geo.service';
 export * from './question.service';
 export * from './rating.service';

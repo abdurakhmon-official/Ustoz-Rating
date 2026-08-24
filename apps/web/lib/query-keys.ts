@@ -20,4 +20,7 @@ export const queryKeys = {
   topRating: (query: Record<string, unknown> = {}) => ['top-rating', query] as const,
   myRating: ['my-rating'] as const,
   ratingSettings: ['rating-settings'] as const,
+  myCertificates: ['my-certificates'] as const,
+  certificate: (certificateId: string) => ['certificate', certificateId] as const,
+  certificateTemplate: ['certificate-template'] as const,
 };

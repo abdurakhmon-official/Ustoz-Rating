@@ -5,6 +5,7 @@ import { AdminUserQuerySchema } from '@repo/contracts';
 import prisma from '@/modules/db';
 import { hashPassword } from '@/modules/auth';
 import { badRequest, conflict, notFound, requireUserId } from '@/utils/errors.utils';
+import { uz } from '@/i18n/messages/uz.messages';
 import { assertGeoConsistent } from '@/utils/geo-consistency.utils';
 import { USER_PUBLIC_SELECT } from '@/utils/constants';
 import { AuditService } from '@/services/audit.service';
@@ -82,7 +83,7 @@ export class UserService {
     return {
       success: true,
       _code: 'PROFILE_UPDATED',
-      _message: 'Profile updated',
+      _message: uz.PROFILE_UPDATED,
       data: { ...user, isAdmin: user.role === USER_ROLE.ADMIN },
     };
   }

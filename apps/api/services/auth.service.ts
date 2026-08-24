@@ -5,6 +5,7 @@ import prisma from '@/modules/db';
 import { comparePassword, createAccessToken, hashPassword, needsRehash } from '@/modules/auth';
 import { sendMail } from '@/modules/mailer';
 import { badRequest, notFound, requireUserId, unauthorized } from '@/utils/errors.utils';
+import { uz } from '@/i18n/messages/uz.messages';
 import { clearLoginFailures, loginBlockedFor, LOGIN_GUARD, recordLoginFailure } from '@/utils/login-guard.utils';
 import { checkEmailVerificationCode, issueEmailVerificationCode } from '@/utils/email-verification.utils';
 import { verificationEmail } from '@/utils/mail-templates.utils';
@@ -63,7 +64,7 @@ export class AuthService {
     return {
       success: true,
       _code: 'AUTH_SIGNED_UP',
-      _message: 'Registered successfully',
+      _message: uz.AUTH_SIGNED_UP,
       data: createAccessToken(user),
     };
   }
@@ -76,7 +77,7 @@ export class AuthService {
 
     await prisma.user.update({ where: { id: userId }, data: { emailVerified: true } });
 
-    return { success: true, _code: 'AUTH_EMAIL_VERIFIED', _message: 'Email verified' };
+    return { success: true, _code: 'AUTH_EMAIL_VERIFIED', _message: uz.AUTH_EMAIL_VERIFIED };
   }
 
   async resendVerification() {
@@ -88,7 +89,7 @@ export class AuthService {
 
     await this.sendVerificationEmail(userId, user.email);
 
-    return { success: true, _code: 'AUTH_VERIFICATION_SENT', _message: 'Verification code sent' };
+    return { success: true, _code: 'AUTH_VERIFICATION_SENT', _message: uz.AUTH_VERIFICATION_SENT };
   }
 
   private async sendVerificationEmail(userId: string, email: string): Promise<void> {
@@ -150,7 +151,7 @@ export class AuthService {
     const payload = this.request.auth;
     if (payload) await this.tokenService.revoke(payload);
 
-    return { success: true, _code: 'AUTH_SIGNED_OUT', _message: 'Signed out' };
+    return { success: true, _code: 'AUTH_SIGNED_OUT', _message: uz.AUTH_SIGNED_OUT };
   }
 
   private async rehashPassword(userId: string, plainPassword: string): Promise<void> {

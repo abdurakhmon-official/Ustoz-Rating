@@ -5,6 +5,8 @@ import { differenceInSeconds } from 'date-fns';
 import prisma from '@/modules/db';
 import { badRequest, forbidden, notFound, requireUserId } from '@/utils/errors.utils';
 import { gradeAttempt } from '@/utils/scoring.utils';
+import { uz } from '@/i18n/messages/uz.messages';
+import { CertificateService } from '@/services/certificate.service';
 import { TEST_STATUS, Prisma } from '../generated/prisma';
 import type { StartAttemptInput, SubmitAttemptInput } from '@/inputs/test-attempt.input';
 
@@ -14,6 +16,9 @@ export class TestAttemptService {
 
   @InjectContext()
   private context!: PlatformContext;
+
+  @Inject()
+  private certificateService!: CertificateService;
 
   private get user() {
     return this.context.getRequest<Request>().user;
@@ -109,6 +114,7 @@ export class TestAttemptService {
         id: true,
         title: true,
         durationMinutes: true,
+        subject: { select: { name: true } },
         questions: { select: { id: true, correctIndex: true } },
       },
     });
@@ -134,10 +140,21 @@ export class TestAttemptService {
       },
     });
 
+    if (result.passed && this.user) {
+      await this.certificateService.checkAndIssue({
+        attemptId: attempt.id,
+        teacherId: this.teacherId,
+        testId: test.id,
+        teacherName: this.user.fullName,
+        subjectName: test.subject.name,
+        score: result.score,
+      });
+    }
+
     return {
       success: true,
       _code: 'ATTEMPT_SUBMITTED',
-      _message: 'Attempt submitted',
+      _message: uz.ATTEMPT_SUBMITTED,
       data: {
         id: updated.id,
         testId: test.id,

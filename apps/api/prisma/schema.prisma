@@ -61,6 +61,7 @@ model User {
   subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: SetNull)
 
   testAttempts TestAttempt[]
+  certificates Certificate[]
 
   @@index([email])
   @@index([regionId])
@@ -144,9 +145,10 @@ model Test {
   createdAt       DateTime    @default(now()) @map("created_at")
   updatedAt       DateTime    @updatedAt @map("updated_at")
 
-  subject   Subject       @relation(fields: [subjectId], references: [id], onDelete: Restrict)
-  questions Question[]
-  attempts  TestAttempt[]
+  subject      Subject       @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+  questions    Question[]
+  attempts     TestAttempt[]
+  certificates Certificate[]
 
   @@index([subjectId])
   @@index([status])
@@ -184,8 +186,9 @@ model TestAttempt {
   startedAt        DateTime  @default(now()) @map("started_at")
   submittedAt      DateTime? @map("submitted_at")
 
-  test    Test @relation(fields: [testId], references: [id], onDelete: Cascade)
-  teacher User @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  test        Test         @relation(fields: [testId], references: [id], onDelete: Cascade)
+  teacher     User         @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  certificate Certificate?
 
   @@index([testId, teacherId])
   @@index([teacherId])
@@ -203,6 +206,34 @@ model RatingSettings {
   updatedAt          DateTime @updatedAt @map("updated_at")
 
   @@map("rating_settings")
+}
+
+model Certificate {
+  id            String   @id @default(uuid())
+  certificateId String   @unique @map("certificate_id")
+  teacherId     String   @map("teacher_id")
+  testId        String   @map("test_id")
+  attemptId     String   @unique @map("attempt_id")
+  teacherName   String   @map("teacher_name")
+  subjectName   String   @map("subject_name")
+  score         Int
+  issuedAt      DateTime @default(now()) @map("issued_at")
+
+  teacher User        @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  test    Test        @relation(fields: [testId], references: [id], onDelete: Cascade)
+  attempt TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@index([teacherId])
+  @@map("certificates")
+}
+
+/// Yagona qator (singleton) — sertifikat matni placeholder bilan, admin tahrirlaydi.
+model CertificateTemplate {
+  id        String   @id @default(uuid())
+  text      String   @default("Ushbu sertifikat {fullName} {subject} fanidan bilim testini {score}% natija bilan muvaffaqiyatli topshirganligini tasdiqlaydi.")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("certificate_templates")
 }
 
 model AuditLog {

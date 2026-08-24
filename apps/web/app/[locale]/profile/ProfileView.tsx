@@ -13,11 +13,13 @@ import { Input } from '@/components/ui/Input';
 import { RadioGroup } from '@/components/ui/RadioGroup';
 import { Select } from '@/components/ui/Select';
 import { assetUrl } from '@/lib/utils';
+import { Link } from '@/i18n/navigation';
 import { useSession } from '@/hooks/use-auth';
 import { useUpdateProfile } from '@/hooks/use-user';
 import { useUploadDirect } from '@/hooks/use-upload';
 import { useDistricts, useRegions, useSchools } from '@/hooks/use-geo';
 import { useSubjects } from '@/hooks/use-subjects';
+import { useMyCertificates } from '@/hooks/use-certificates';
 
 export function ProfileView() {
   const t = useTranslations('profile');
@@ -26,6 +28,7 @@ export function ProfileView() {
   const updateProfile = useUpdateProfile();
   const upload = useUploadDirect();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { data: certificates } = useMyCertificates();
 
   const {
     register,
@@ -205,6 +208,33 @@ export function ProfileView() {
               {updateProfile.isPending ? t('saving') : t('save')}
             </Button>
           </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('certificates.title')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {!certificates?.length ? (
+            <p className="text-muted-foreground">{t('certificates.empty')}</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {certificates.map((certificate) => (
+                <Link
+                  key={certificate.certificateId}
+                  href={{ pathname: '/certificates/[certificateId]', params: { certificateId: certificate.certificateId } }}
+                  className="flex flex-col gap-1 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent"
+                >
+                  <p className="font-medium">{certificate.subjectName}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t('certificates.issuedAt', { date: new Date(certificate.issuedAt).toLocaleDateString() })}
+                  </p>
+                  <p className="text-lg font-semibold">{certificate.score}%</p>
+                </Link>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

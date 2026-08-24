@@ -78,7 +78,13 @@
     "save": "Saqlash",
     "saving": "Saqlanmoqda…",
     "emailVerified": "Email tasdiqlangan",
-    "emailNotVerified": "Email tasdiqlanmagan"
+    "emailNotVerified": "Email tasdiqlanmagan",
+    "certificates": {
+      "title": "Sertifikatlarim",
+      "empty": "Sizda hali sertifikat yo'q",
+      "view": "Ko'rish",
+      "issuedAt": "Berilgan sana: {date}"
+    }
   },
   "tests": {
     "title": "Testlar",
@@ -171,13 +177,26 @@
       "title": "TOP 10 o'qituvchi"
     }
   },
+  "certificateDetail": {
+    "title": "Sertifikat",
+    "verified": "Haqiqiy sertifikat",
+    "notFound": "Sertifikat topilmadi",
+    "notFoundHint": "Ushbu raqamli sertifikat mavjud emas yoki bekor qilingan.",
+    "subject": "Fan",
+    "teacher": "O'qituvchi",
+    "score": "Natija",
+    "issuedAt": "Berilgan sana",
+    "code": "Sertifikat raqami",
+    "print": "Chop etish"
+  },
   "admin": {
     "nav": {
       "users": "O'qituvchilar",
       "tests": "Testlar",
       "subjects": "Fanlar",
       "geo": "Hudud",
-      "ratingSettings": "Reyting sozlamalari"
+      "ratingSettings": "Reyting sozlamalari",
+      "certificateTemplate": "Sertifikat shabloni"
     },
     "ratingSettings": {
       "title": "Reyting formulasi",
@@ -186,6 +205,12 @@
       "consistencyWeight": "Barqarorlik og'irligi",
       "attemptCountWeight": "Testlar soni og'irligi",
       "minAttemptsRequired": "Reytingga kirish uchun minimal testlar soni",
+      "save": "Saqlash"
+    },
+    "certificateTemplate": {
+      "title": "Sertifikat matni shabloni",
+      "hint": "Quyidagi joy egallovchilardan foydalanishingiz mumkin: '{'fullName'}', '{'subject'}', '{'score'}'",
+      "text": "Shablon matni",
       "save": "Saqlash"
     },
     "users": {
@@ -347,6 +372,8 @@
     "ATTEMPT_ALREADY_SUBMITTED": "Bu urinish allaqachon yakunlangan",
     "ATTEMPT_TIME_EXPIRED": "Test uchun ajratilgan vaqt tugadi",
     "ATTEMPT_SUBMITTED": "Test natijasi qabul qilindi",
+    "CERTIFICATE_NOT_FOUND": "Sertifikat topilmadi",
+    "FILE_UPLOADED": "Fayl yuklandi",
     "VALIDATION_PASSWORD_SHORT": "Parol juda qisqa",
     "VALIDATION_PASSWORD_LONG": "Parol juda uzun",
     "VALIDATION_PASSWORD_PERSONAL": "Parol ismingiz yoki emailingizni o'z ichiga olmasligi kerak",

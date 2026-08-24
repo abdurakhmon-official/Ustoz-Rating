@@ -7,3 +7,4 @@ export * from './subject/subject.schema';
 export * from './test/test.schema';
 export * from './test-attempt/test-attempt.schema';
 export * from './rating/rating.schema';
+export * from './certificate/certificate.schema';
