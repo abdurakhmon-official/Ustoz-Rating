@@ -4,6 +4,7 @@ import { BookOpen, ClipboardList, HelpCircle, TrendingUp, Users, Zap } from 'luc
 import { useTranslations } from 'next-intl';
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { DashboardSkeleton } from '@/components/ui/DashboardSkeleton';
 import { StatCard } from '@/components/ui/StatCard';
 import { useAdminDashboard } from '@/hooks/use-dashboard';
 
@@ -13,7 +14,7 @@ export function AdminDashboardView() {
   const t = useTranslations('dashboard.admin');
   const { data } = useAdminDashboard();
 
-  if (!data) return null;
+  if (!data) return <DashboardSkeleton />;
 
   const growthData = data.teacherGrowth.map((point) => ({ name: point.date.slice(5), count: point.count }));
   const submissionsData = data.submissionsPerDay.map((point) => ({ name: point.date.slice(5), count: point.count }));

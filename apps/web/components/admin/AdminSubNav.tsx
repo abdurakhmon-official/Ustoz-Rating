@@ -18,6 +18,7 @@ export function AdminSubNav() {
     { href: '/admin/rating-settings', label: t('ratingSettings') },
     { href: '/admin/certificate-template', label: t('certificateTemplate') },
     { href: '/admin/notification-templates', label: t('notificationTemplates') },
+    { href: '/admin/legal', label: t('legal') },
   ] as const;
 
   return (

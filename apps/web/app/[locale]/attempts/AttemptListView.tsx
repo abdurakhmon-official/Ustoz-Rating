@@ -1,8 +1,10 @@
 'use client';
 
+import { ClipboardList } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { Link } from '@/i18n/navigation';
 import { useMyAttempts } from '@/hooks/use-attempts';
 
@@ -15,7 +17,7 @@ export function AttemptListView() {
       <h1 className="text-2xl font-bold">{t('title')}</h1>
 
       {!attempts?.length ? (
-        <p className="text-muted-foreground">{t('empty')}</p>
+        <EmptyState icon={ClipboardList} title={t('empty')} />
       ) : (
         <div className="flex flex-col gap-2">
           {attempts.map((attempt) => (

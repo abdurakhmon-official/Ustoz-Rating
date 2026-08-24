@@ -92,6 +92,7 @@ export function Header() {
 
         <div className="flex items-center gap-1 sm:hidden">
           <ThemeToggle />
+          {isAuthenticated && <NotificationBell />}
           <Button
             variant="ghost"
             size="sm"
@@ -107,6 +108,11 @@ export function Header() {
 
       {menuOpen && (
         <div className="border-t border-border bg-background px-4 py-4 sm:hidden">
+          {isAuthenticated && (
+            <div className="mb-3">
+              <GlobalSearch />
+            </div>
+          )}
           <nav className="flex flex-col gap-1">
             <Link href="/rating" onClick={closeMenu}>
               <Button variant="ghost" size="sm" className="w-full justify-start">

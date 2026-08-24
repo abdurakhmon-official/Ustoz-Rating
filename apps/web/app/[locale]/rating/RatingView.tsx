@@ -1,9 +1,11 @@
 'use client';
 
+import { Trophy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import type { RatingPeriod } from '@repo/contracts';
 import { Card, CardContent } from '@/components/ui/Card';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
 import { Pagination } from '@/components/ui/Pagination';
 import { RankBadge } from '@/components/ui/RankBadge';
@@ -162,7 +164,7 @@ export function RatingView() {
       </div>
 
       {!data?.data.length ? (
-        <p className="text-muted-foreground">{t('empty')}</p>
+        <EmptyState icon={Trophy} title={t('empty')} />
       ) : (
         <div className="flex flex-col gap-2">
           {data.data.map((entry) => (

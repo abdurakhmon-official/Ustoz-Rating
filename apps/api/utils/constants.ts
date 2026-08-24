@@ -6,17 +6,16 @@ export const BCRYPT_SALT_ROUNDS = 10;
 
 export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 
-export const UPLOAD_FOLDERS = ['avatar', 'document', 'subject'] as const;
+export const UPLOAD_FOLDERS = ['avatar', 'subject'] as const;
 
 export type UploadFolder = (typeof UPLOAD_FOLDERS)[number];
 
 export const MAX_UPLOAD_BYTES_BY_FOLDER: Record<UploadFolder, number> = {
   avatar: MAX_UPLOAD_BYTES,
-  document: MAX_UPLOAD_BYTES,
   subject: MAX_UPLOAD_BYTES,
 };
 
-export const READABLE_ASSET_FOLDERS = ['avatar', 'document', 'subject'] as const;
+export const READABLE_ASSET_FOLDERS = ['avatar', 'subject'] as const;
 
 export type ReadableAssetFolder = (typeof READABLE_ASSET_FOLDERS)[number];
 
@@ -38,14 +37,6 @@ export const UPLOAD_MIME_TYPES: Record<string, 'IMAGE' | 'DOCUMENT' | 'VIDEO' | 
 
 export const ALLOWED_MIME_BY_FOLDER: Record<UploadFolder, readonly string[]> = {
   avatar: ['image/png', 'image/jpeg', 'image/webp', 'image/avif'],
-  document: [
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'text/plain',
-    'image/png',
-    'image/jpeg',
-  ],
   subject: ['image/png', 'image/jpeg', 'image/webp', 'image/avif'],
 };
 

@@ -10,3 +10,4 @@ export * from './rating/rating.schema';
 export * from './certificate/certificate.schema';
 export * from './notification/notification.schema';
 export * from './dashboard/dashboard.schema';
+export * from './legal/legal.schema';

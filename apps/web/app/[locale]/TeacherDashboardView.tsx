@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { DashboardSkeleton } from '@/components/ui/DashboardSkeleton';
 import { RankBadge } from '@/components/ui/RankBadge';
 import { StatCard } from '@/components/ui/StatCard';
 import { Link } from '@/i18n/navigation';
@@ -16,7 +17,13 @@ export function TeacherDashboardView() {
   const { data } = useTeacherDashboard();
   const { data: tests } = usePublishedTests();
 
-  if (!data) return null;
+  if (!data) {
+    return (
+      <div className="mx-auto w-full max-w-6xl px-4 py-10">
+        <DashboardSkeleton />
+      </div>
+    );
+  }
 
   const chartData = data.recentAttempts.map((attempt) => ({
     name: new Date(attempt.submittedAt).toLocaleDateString(),

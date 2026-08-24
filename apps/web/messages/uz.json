@@ -61,7 +61,16 @@
     "signIn": "Kirish"
   },
   "footer": {
-    "copyright": "© {year} Ustoz Rating"
+    "copyright": "© {year} Ustoz Rating",
+    "terms": "Foydalanish shartlari",
+    "privacy": "Maxfiylik siyosati"
+  },
+  "legal": {
+    "title": {
+      "TERMS": "Foydalanish shartlari",
+      "PRIVACY": "Maxfiylik siyosati"
+    },
+    "effectiveFrom": "Amal qilish sanasi: {date}"
   },
   "notifications": {
     "title": "Bildirishnomalar",
@@ -256,7 +265,8 @@
       "geo": "Hudud",
       "ratingSettings": "Reyting sozlamalari",
       "certificateTemplate": "Sertifikat shabloni",
-      "notificationTemplates": "Bildirishnoma shablonlari"
+      "notificationTemplates": "Bildirishnoma shablonlari",
+      "legal": "Huquqiy hujjatlar"
     },
     "ratingSettings": {
       "title": "Reyting formulasi",
@@ -272,6 +282,15 @@
       "hint": "Quyidagi joy egallovchilardan foydalanishingiz mumkin: '{'fullName'}', '{'subject'}', '{'score'}'",
       "text": "Shablon matni",
       "save": "Saqlash"
+    },
+    "legal": {
+      "title": "Huquqiy hujjatlar",
+      "type": {
+        "TERMS": "Foydalanish shartlari",
+        "PRIVACY": "Maxfiylik siyosati"
+      },
+      "publish": "Yangi versiyani nashr qilish",
+      "history": "Oldingi versiyalar"
     },
     "notificationTemplates": {
       "title": "Bildirishnoma shablonlari",

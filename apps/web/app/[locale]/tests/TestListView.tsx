@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { Select } from '@/components/ui/Select';
 import { Link } from '@/i18n/navigation';
 import { usePublishedTests } from '@/hooks/use-attempts';
@@ -48,7 +49,7 @@ export function TestListView() {
       </div>
 
       {!tests?.length ? (
-        <p className="text-muted-foreground">{t('empty')}</p>
+        <EmptyState icon={BookOpen} title={t('empty')} />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tests.map((test) => (

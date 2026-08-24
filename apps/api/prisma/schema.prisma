@@ -37,6 +37,11 @@ enum NOTIFICATION_TYPE {
   CERTIFICATE_ISSUED
 }
 
+enum LEGAL_DOCUMENT_TYPE {
+  TERMS
+  PRIVACY
+}
+
 model User {
   id                String    @id @default(uuid())
   fullName          String    @map("full_name")
@@ -265,6 +270,18 @@ model NotificationTemplate {
   updatedAt DateTime          @updatedAt @map("updated_at")
 
   @@map("notification_templates")
+}
+
+/// Har bir tahrir yangi qator sifatida saqlanadi — eski versiya hech qachon o'zgartirilmaydi yoki o'chirilmaydi.
+model LegalDocument {
+  id            String              @id @default(uuid())
+  type          LEGAL_DOCUMENT_TYPE
+  text          String
+  effectiveFrom DateTime            @map("effective_from")
+  createdAt     DateTime            @default(now()) @map("created_at")
+
+  @@index([type, effectiveFrom])
+  @@map("legal_documents")
 }
 
 model AuditLog {

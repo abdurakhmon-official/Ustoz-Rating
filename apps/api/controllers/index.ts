@@ -8,6 +8,7 @@ export * from "./certificate.controller";
 export * from "./dashboard.controller";
 export * from "./geo.controller";
 export * from "./health.controller";
+export * from "./legal.controller";
 export * from "./notification.controller";
 export * from "./question.controller";
 export * from "./rating.controller";

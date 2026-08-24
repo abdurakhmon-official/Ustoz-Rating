@@ -28,4 +28,6 @@ export const queryKeys = {
   search: (q: string) => ['search', q] as const,
   teacherDashboard: ['teacher-dashboard'] as const,
   adminDashboard: ['admin-dashboard'] as const,
+  legalDocument: (type: string) => ['legal-document', type] as const,
+  legalHistory: (type: string) => ['legal-history', type] as const,
 };

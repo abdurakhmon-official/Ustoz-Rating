@@ -36,7 +36,6 @@ import {
 export class S3Service {
   private static readonly UPLOAD_URL_EXPIRY = 15 * 60;
   private static readonly SELF_SERVICE_FOLDERS: UploadFolder[] = ['avatar'];
-  private static readonly AUTHENTICATED_FOLDERS: UploadFolder[] = ['document'];
   private static readonly DEFAULT_EXTENSIONS: Record<string, string> = {
     'image/png': '.png',
     'image/jpeg': '.jpg',
@@ -129,10 +128,6 @@ export class S3Service {
     this.assertFolder(folder);
     this.assertMayWrite(folder as UploadFolder);
 
-    if (folder === 'lesson-video') {
-      throw new BadRequest('use /generate-policy for video uploads, not this endpoint');
-    }
-
     const mimeType = file.mimetype?.split(';')[0].trim().toLowerCase() ?? '';
     if (!UPLOAD_MIME_TYPES[mimeType]) {
       throw new BadRequest(`unsupported file type: ${file.mimetype}`);
@@ -211,7 +206,6 @@ export class S3Service {
   private assertMayWrite(folder: UploadFolder): void {
     if (S3Service.SELF_SERVICE_FOLDERS.includes(folder)) return;
     if (this.user?.role === USER_ROLE.ADMIN) return;
-    if (S3Service.AUTHENTICATED_FOLDERS.includes(folder) && this.user) return;
 
     throw new Forbidden('admin access required');
   }

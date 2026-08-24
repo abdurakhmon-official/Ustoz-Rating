@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Award } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,6 +9,7 @@ import { UpdateProfileInputSchema, type UpdateProfileInput } from '@repo/contrac
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { FormField } from '@/components/ui/FormField';
 import { Input } from '@/components/ui/Input';
 import { RadioGroup } from '@/components/ui/RadioGroup';
@@ -217,7 +219,7 @@ export function ProfileView() {
         </CardHeader>
         <CardContent>
           {!certificates?.length ? (
-            <p className="text-muted-foreground">{t('certificates.empty')}</p>
+            <EmptyState icon={Award} title={t('certificates.empty')} />
           ) : (
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {certificates.map((certificate) => (
