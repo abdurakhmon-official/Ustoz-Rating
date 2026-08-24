@@ -154,8 +154,12 @@ export class TestAttemptService {
   }
 
   async myAttempts() {
+    return this.listForTeacher(this.teacherId);
+  }
+
+  async listForTeacher(teacherId: string) {
     const attempts = await prisma.testAttempt.findMany({
-      where: { teacherId: this.teacherId, submittedAt: { not: null } },
+      where: { teacherId, submittedAt: { not: null } },
       select: {
         id: true,
         testId: true,

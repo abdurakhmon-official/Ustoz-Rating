@@ -1,11 +1,30 @@
-import type { AdminUserListItem, AdminUserQuery, SetActiveInput, UpdateProfileInput, UpdateRoleInput, UserOutput } from '@repo/contracts';
+import type {
+  AdminCreateUserInput,
+  AdminUpdateUserInput,
+  AdminUserDetail,
+  AdminUserListItem,
+  AdminUserQuery,
+  AttemptListItem,
+  SetActiveInput,
+  UpdateProfileInput,
+  UpdateRoleInput,
+  UserOutput,
+} from '@repo/contracts';
 import { BaseService, type Paged } from '@/lib/services/base.service';
 
-export class UserService extends BaseService<AdminUserListItem, never, never> {
+export class UserService extends BaseService<AdminUserDetail, AdminCreateUserInput, AdminUpdateUserInput> {
   protected BASE_PATH = 'users';
 
   async list(query: Partial<AdminUserQuery> = {}): Promise<Paged<AdminUserListItem>> {
     return this.sendGetPaged<AdminUserListItem>('', query);
+  }
+
+  override async update(userId: string, input: AdminUpdateUserInput) {
+    return this.sendPatch<AdminUserDetail, AdminUpdateUserInput>(`/${userId}`, input);
+  }
+
+  async attempts(userId: string) {
+    return this.sendGet<AttemptListItem[]>(`/${userId}/attempts`);
   }
 
   async updateProfile(input: UpdateProfileInput): Promise<UserOutput> {

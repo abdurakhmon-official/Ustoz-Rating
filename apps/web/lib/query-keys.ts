@@ -13,4 +13,6 @@ export const queryKeys = {
   publishedTests: (subjectId?: string) => ['published-tests', subjectId ?? ''] as const,
   myAttemptsBase: ['my-attempts'] as const,
   attempt: (attemptId: string) => ['attempt', attemptId] as const,
+  adminUser: (userId: string) => ['admin-user', userId] as const,
+  adminUserAttempts: (userId: string) => ['admin-user-attempts', userId] as const,
 };

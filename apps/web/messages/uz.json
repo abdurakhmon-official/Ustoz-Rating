@@ -145,6 +145,8 @@
       "title": "O'qituvchilar",
       "search": "Ism yoki email bo'yicha qidirish",
       "allRoles": "Barcha rollar",
+      "allRegions": "Barcha viloyatlar",
+      "allSubjects": "Barcha fanlar",
       "role": {
         "ADMIN": "Admin",
         "TEACHER": "O'qituvchi"
@@ -153,7 +155,23 @@
       "inactive": "Bloklangan",
       "activate": "Faollashtirish",
       "deactivate": "Bloklash",
+      "delete": "O'chirish",
+      "confirmDelete": "Bu o'qituvchini o'chirmoqchimisiz?",
+      "add": "Yangi o'qituvchi",
+      "viewProfile": "Profil",
       "empty": "O'qituvchi topilmadi"
+    },
+    "userCreate": {
+      "title": "Yangi o'qituvchi qo'shish",
+      "roleLabel": "Rol",
+      "submit": "Qo'shish"
+    },
+    "userDetail": {
+      "back": "O'qituvchilar ro'yxatiga qaytish",
+      "editTitle": "Ma'lumotlarni tahrirlash",
+      "save": "Saqlash",
+      "attemptsTitle": "Test natijalari",
+      "attemptsEmpty": "Hali test topshirmagan"
     },
     "tests": {
       "title": "Testlar",
