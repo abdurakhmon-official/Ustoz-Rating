@@ -15,4 +15,9 @@ export const queryKeys = {
   attempt: (attemptId: string) => ['attempt', attemptId] as const,
   adminUser: (userId: string) => ['admin-user', userId] as const,
   adminUserAttempts: (userId: string) => ['admin-user-attempts', userId] as const,
+  ratingsBase: ['ratings'] as const,
+  ratings: (query: Record<string, unknown> = {}) => [...queryKeys.ratingsBase, query] as const,
+  topRating: (query: Record<string, unknown> = {}) => ['top-rating', query] as const,
+  myRating: ['my-rating'] as const,
+  ratingSettings: ['rating-settings'] as const,
 };

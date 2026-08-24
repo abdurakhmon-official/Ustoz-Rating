@@ -7,6 +7,7 @@ export * from "./aws.controller";
 export * from "./geo.controller";
 export * from "./health.controller";
 export * from "./question.controller";
+export * from "./rating.controller";
 export * from "./subject.controller";
 export * from "./test-attempt.controller";
 export * from "./test.controller";

@@ -14,6 +14,7 @@ export function AdminSubNav() {
     { href: '/admin/tests', label: t('tests') },
     { href: '/admin/subjects', label: t('subjects') },
     { href: '/admin/geo', label: t('geo') },
+    { href: '/admin/rating-settings', label: t('ratingSettings') },
   ] as const;
 
   return (

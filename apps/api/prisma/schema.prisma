@@ -192,6 +192,19 @@ model TestAttempt {
   @@map("test_attempts")
 }
 
+/// Yagona qator (singleton) — admin panelidan tahrirlanadi, Redis'da keshlanadi.
+model RatingSettings {
+  id                 String   @id @default(uuid())
+  avgScoreWeight     Float    @default(0.4) @map("avg_score_weight")
+  bestScoreWeight    Float    @default(0.2) @map("best_score_weight")
+  consistencyWeight  Float    @default(0.2) @map("consistency_weight")
+  attemptCountWeight Float    @default(0.2) @map("attempt_count_weight")
+  minAttemptsRequired Int     @default(1) @map("min_attempts_required")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("rating_settings")
+}
+
 model AuditLog {
   id        String   @id @default(uuid())
   actorId   String   @map("actor_id")

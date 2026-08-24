@@ -7,6 +7,7 @@
     "profile": "Profilim",
     "tests": "Testlar",
     "attempts": "Natijalarim",
+    "rating": "Reyting",
     "admin": "Admin panel",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish"
@@ -134,12 +135,58 @@
       "incorrect": "Noto'g'ri"
     }
   },
+  "rating": {
+    "title": "Reyting",
+    "filters": {
+      "allRegions": "Barcha viloyatlar",
+      "allDistricts": "Barcha tumanlar",
+      "allSchools": "Barcha maktablar",
+      "allSubjects": "Barcha fanlar",
+      "allGenders": "Jinsi bo'yicha",
+      "male": "Erkak",
+      "female": "Ayol",
+      "experienceMin": "Tajriba (yildan)",
+      "period": {
+        "all": "Barcha vaqt",
+        "week": "Hafta",
+        "month": "Oy"
+      }
+    },
+    "columns": {
+      "teacher": "O'qituvchi",
+      "school": "Maktab",
+      "region": "Viloyat",
+      "score": "Ball"
+    },
+    "empty": "Hozircha reyting uchun ma'lumot yo'q",
+    "myRating": {
+      "title": "Mening reytingim",
+      "republic": "Respublika",
+      "region": "Viloyat",
+      "district": "Tuman",
+      "notEligible": "Reytingga kirish uchun yetarli test topshiring",
+      "of": "{total} tadan"
+    },
+    "top": {
+      "title": "TOP 10 o'qituvchi"
+    }
+  },
   "admin": {
     "nav": {
       "users": "O'qituvchilar",
       "tests": "Testlar",
       "subjects": "Fanlar",
-      "geo": "Hudud"
+      "geo": "Hudud",
+      "ratingSettings": "Reyting sozlamalari"
+    },
+    "ratingSettings": {
+      "title": "Reyting formulasi",
+      "avgScoreWeight": "O'rtacha ball og'irligi",
+      "bestScoreWeight": "Eng yuqori natija og'irligi",
+      "consistencyWeight": "Barqarorlik og'irligi",
+      "attemptCountWeight": "Testlar soni og'irligi",
+      "minAttemptsRequired": "Reytingga kirish uchun minimal testlar soni",
+      "save": "Saqlash"
     },
     "users": {
       "title": "O'qituvchilar",

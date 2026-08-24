@@ -25,6 +25,8 @@ export const routing = defineRouting({
     '/tests/[testId]': '/tests/[testId]',
     '/attempts': '/attempts',
     '/attempts/[attemptId]': '/attempts/[attemptId]',
+    '/rating': '/rating',
+    '/admin/rating-settings': '/admin/rating-settings',
   },
 });
 

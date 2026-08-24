@@ -29,6 +29,12 @@ export function Header() {
         <div className="hidden items-center gap-3 sm:flex">
           <ThemeToggle />
 
+          <Link href="/rating">
+            <Button variant="ghost" size="sm">
+              {t('rating')}
+            </Button>
+          </Link>
+
           {isAuthenticated ? (
             <>
               {user?.role === 'TEACHER' && (
@@ -93,6 +99,11 @@ export function Header() {
       {menuOpen && (
         <div className="border-t border-border bg-background px-4 py-4 sm:hidden">
           <nav className="flex flex-col gap-1">
+            <Link href="/rating" onClick={closeMenu}>
+              <Button variant="ghost" size="sm" className="w-full justify-start">
+                {t('rating')}
+              </Button>
+            </Link>
             {isAuthenticated ? (
               <>
                 {user?.role === 'TEACHER' && (
