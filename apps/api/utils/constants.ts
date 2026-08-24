@@ -6,16 +6,17 @@ export const BCRYPT_SALT_ROUNDS = 10;
 
 export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 
-export const UPLOAD_FOLDERS = ['avatar', 'document'] as const;
+export const UPLOAD_FOLDERS = ['avatar', 'document', 'subject'] as const;
 
 export type UploadFolder = (typeof UPLOAD_FOLDERS)[number];
 
 export const MAX_UPLOAD_BYTES_BY_FOLDER: Record<UploadFolder, number> = {
   avatar: MAX_UPLOAD_BYTES,
   document: MAX_UPLOAD_BYTES,
+  subject: MAX_UPLOAD_BYTES,
 };
 
-export const READABLE_ASSET_FOLDERS = ['avatar', 'document'] as const;
+export const READABLE_ASSET_FOLDERS = ['avatar', 'document', 'subject'] as const;
 
 export type ReadableAssetFolder = (typeof READABLE_ASSET_FOLDERS)[number];
 
@@ -45,6 +46,7 @@ export const ALLOWED_MIME_BY_FOLDER: Record<UploadFolder, readonly string[]> = {
     'image/png',
     'image/jpeg',
   ],
+  subject: ['image/png', 'image/jpeg', 'image/webp', 'image/avif'],
 };
 
 export const USER_PUBLIC_SELECT = {
@@ -53,11 +55,18 @@ export const USER_PUBLIC_SELECT = {
   email: true,
   role: true,
   phone: true,
+  gender: true,
   avatar: true,
   locale: true,
   emailVerified: true,
   passwordChangedAt: true,
   active: true,
+  regionId: true,
+  districtId: true,
+  schoolId: true,
+  subjectId: true,
+  position: true,
+  experienceYears: true,
   createdAt: true,
   updatedAt: true,
   deletedAt: true,

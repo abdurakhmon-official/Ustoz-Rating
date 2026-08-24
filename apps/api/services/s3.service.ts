@@ -20,6 +20,7 @@ import {
 } from '@/modules/storage';
 import { uuid } from '@/utils';
 import { badRequest } from '@/utils/errors.utils';
+import { matchesDeclaredMimeType } from '@/utils/mime-sniff.utils';
 import {
   ALLOWED_MIME_BY_FOLDER,
   MAX_UPLOAD_BYTES_BY_FOLDER,
@@ -136,6 +137,10 @@ export class S3Service {
       throw new BadRequest(`unsupported file type: ${file.mimetype}`);
     }
     this.assertMimeAllowedForFolder(folder as UploadFolder, mimeType);
+
+    if (!matchesDeclaredMimeType(file.buffer, mimeType)) {
+      throw badRequest('UPLOAD_MIME_NOT_ALLOWED_FOR_FOLDER', 'the file content does not match its declared type');
+    }
 
     if (file.size > MAX_UPLOAD_BYTES_BY_FOLDER[folder as UploadFolder]) {
       throw new BadRequest(`file is larger than ${this.readableLimit(folder as UploadFolder)}`);

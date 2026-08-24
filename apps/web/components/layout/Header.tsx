@@ -4,7 +4,6 @@ import { LayoutGrid, Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
-import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useSession, useSignOut } from '@/hooks/use-auth';
@@ -28,11 +27,15 @@ export function Header() {
         </Link>
 
         <div className="hidden items-center gap-3 sm:flex">
-          <LanguageSwitcher />
           <ThemeToggle />
 
           {isAuthenticated ? (
             <>
+              <Link href="/profile">
+                <Button variant="ghost" size="sm">
+                  {t('profile')}
+                </Button>
+              </Link>
               {user?.role === 'ADMIN' && (
                 <Link href="/admin">
                   <Button variant="ghost" size="sm">
@@ -78,6 +81,11 @@ export function Header() {
           <nav className="flex flex-col gap-1">
             {isAuthenticated ? (
               <>
+                <Link href="/profile" onClick={closeMenu}>
+                  <Button variant="ghost" size="sm" className="w-full justify-start">
+                    {t('profile')}
+                  </Button>
+                </Link>
                 {user?.role === 'ADMIN' && (
                   <Link href="/admin" onClick={closeMenu}>
                     <Button variant="ghost" size="sm" className="w-full justify-start">
@@ -102,9 +110,8 @@ export function Header() {
             )}
           </nav>
 
-          <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
-            <LanguageSwitcher />
-            {isAuthenticated && (
+          {isAuthenticated && (
+            <div className="mt-4 flex items-center justify-end border-t border-border pt-4">
               <Button
                 variant="outline"
                 size="sm"
@@ -115,8 +122,8 @@ export function Header() {
               >
                 {t('signOut')}
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </header>

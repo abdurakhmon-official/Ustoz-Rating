@@ -20,13 +20,27 @@ export class UploadService {
     return data.data;
   }
 
-  /** S3'ga to'g'ridan-to'g'ri yuklaydi — ilova `api` instansi ORQALI EMAS (Authorization header presigned URL imzosiga kirmaydi). */
   async upload(folder: string, file: File): Promise<{ key: string; fileName: string }> {
     const policy = await this.generatePolicy(folder, file);
 
     await fetch(policy.uploadUrl, { method: 'PUT', headers: policy.headers, body: file });
 
     return { key: policy.key, fileName: file.name };
+  }
+
+  /**
+   * `AWS_S3_BUCKET` sozlanmagan muhitda (lokal disk fallback) ishlaydigan
+   * yo'l — `generatePolicy` esa haqiqiy S3'ni talab qiladi.
+   */
+  async uploadDirect(folder: string, file: File): Promise<{ key: string; url: string }> {
+    const form = new FormData();
+    form.append('file', file);
+
+    const { data } = await api.post<ApiResponse<{ key: string; url: string }>>(`/s3/${folder}/upload`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    return data.data;
   }
 }
 

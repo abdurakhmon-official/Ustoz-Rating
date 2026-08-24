@@ -3,12 +3,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookie from 'js-cookie';
 import { useCallback, useEffect } from 'react';
-import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput } from '@repo/contracts';
+import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput, VerifyEmailInput } from '@repo/contracts';
 import { TOKEN_COOKIE } from '@/lib/axios';
 import { queryKeys } from '@/lib/query-keys';
 import { authService } from '@/lib/services';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { logout, setCredentials } from '@/store/slices/auth.slice';
+import { logout, setCredentials, setEmailVerified } from '@/store/slices/auth.slice';
 
 const storeToken = (token: AccessTokenOutput): void => {
   Cookie.set(TOKEN_COOKIE, token.accessToken, {
@@ -80,6 +80,21 @@ export const useSignUp = () => {
       dispatch(setCredentials({ user, token: token.accessToken }));
       queryClient.setQueryData(queryKeys.me, user);
     },
+  });
+};
+
+export const useVerifyEmail = () => {
+  const dispatch = useAppDispatch();
+
+  return useMutation({
+    mutationFn: (input: VerifyEmailInput) => authService.verifyEmail(input),
+    onSuccess: () => dispatch(setEmailVerified()),
+  });
+};
+
+export const useResendVerification = () => {
+  return useMutation({
+    mutationFn: () => authService.resendVerification(),
   });
 };
 

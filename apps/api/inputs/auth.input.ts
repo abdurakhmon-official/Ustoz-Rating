@@ -1,2 +1,2 @@
-export { SignupInputSchema, SigninInputSchema } from '@repo/contracts';
-export type { SignupInput, SigninInput } from '@repo/contracts';
+export { SignupInputSchema, SigninInputSchema, VerifyEmailInputSchema } from '@repo/contracts';
+export type { SignupInput, SigninInput, VerifyEmailInput } from '@repo/contracts';

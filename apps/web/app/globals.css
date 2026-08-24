@@ -78,10 +78,6 @@
   --ring: oklch(0.68 0.17 262);
 }
 
-html[dir='rtl'] {
-  --font-family-active: var(--font-sans-fa);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;

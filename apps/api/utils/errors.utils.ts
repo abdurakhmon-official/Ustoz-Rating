@@ -1,6 +1,6 @@
-import { BadRequest, Forbidden, NotFound, PaymentRequired, Unauthorized } from '@tsed/exceptions';
+import { BadRequest, Conflict, Forbidden, NotFound, PaymentRequired, Unauthorized } from '@tsed/exceptions';
 
-type CodedException = BadRequest | NotFound | Unauthorized | Forbidden | PaymentRequired;
+type CodedException = BadRequest | NotFound | Unauthorized | Forbidden | PaymentRequired | Conflict;
 
 const withCode = <T extends CodedException>(Ctor: new (message: string) => T, code: string, message: string): T => {
   const exception = new Ctor(message);
@@ -17,6 +17,8 @@ export const unauthorized = (code: string, message: string): Unauthorized => wit
 export const forbidden = (code: string, message: string): Forbidden => withCode(Forbidden, code, message);
 
 export const paymentRequired = (code: string, message: string): PaymentRequired => withCode(PaymentRequired, code, message);
+
+export const conflict = (code: string, message: string): Conflict => withCode(Conflict, code, message);
 
 export const requireUserId = (user: { id: string } | undefined): string => {
   if (!user) throw unauthorized('AUTH_UNAUTHORIZED', 'authentication required');

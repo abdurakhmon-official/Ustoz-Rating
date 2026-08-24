@@ -1,8 +1,8 @@
 import { Controller, Inject } from '@tsed/di';
 import { BodyParams } from '@tsed/platform-params';
 import { Get, Post } from '@tsed/schema';
-import { SigninInputSchema, SignupInputSchema } from '@/inputs/auth.input';
-import type { SigninInput, SignupInput } from '@/inputs/auth.input';
+import { SigninInputSchema, SignupInputSchema, VerifyEmailInputSchema } from '@/inputs/auth.input';
+import type { SigninInput, SignupInput, VerifyEmailInput } from '@/inputs/auth.input';
 import { Authorized, Authenticate } from '@/middlewares/auth.middleware';
 import { RATE_LIMITS, RateLimit } from '@/middlewares/rate-limit.middleware';
 import { AuthService } from '@/services/auth.service';
@@ -36,5 +36,20 @@ export class AuthController {
   @Authorized(Authenticate())
   async logout() {
     return this.authService.logout();
+  }
+
+  @Post('/verify-email')
+  @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.auth)
+  async verifyEmail(@BodyParams() body: VerifyEmailInput) {
+    const data = VerifyEmailInputSchema.parse(body);
+    return this.authService.verifyEmail(data);
+  }
+
+  @Post('/resend-verification')
+  @Authorized(Authenticate())
+  @RateLimit(RATE_LIMITS.auth)
+  async resendVerification() {
+    return this.authService.resendVerification();
   }
 }

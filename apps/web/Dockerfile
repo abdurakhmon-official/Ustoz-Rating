@@ -3,7 +3,7 @@
 # Build context MUST be the monorepo root (not apps/web) — the web app depends on the
 # @repo/contracts workspace package and the root pnpm lockfile.
 #   docker build -f apps/web/Dockerfile -t starter-web \
-#     --build-arg NEXT_PUBLIC_API_URL=https://api.example.com/api .
+#     --build-arg NEXT_PUBLIC_API_URL=https://api.example.com/api/v1 .
 #
 # NEXT_PUBLIC_* variables are inlined into the client bundle at BUILD time by Next.js —
 # they must be passed as a --build-arg, setting them only at `docker run` has no effect.

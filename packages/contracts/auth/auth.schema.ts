@@ -5,6 +5,8 @@ import { DEFAULT_LOCALE, LocaleSchema } from '../common/locale';
 
 export const PasswordSchema = z.string().min(8, 'VALIDATION_PASSWORD_SHORT').max(128, 'VALIDATION_PASSWORD_LONG');
 
+export const GenderSchema = z.enum(['MALE', 'FEMALE']);
+
 const assertNotDerived = (password: string, ...parts: (string | null | undefined)[]): boolean => {
   const value = password.toLowerCase();
 
@@ -19,6 +21,14 @@ export const SignupInputSchema = z
     fullName: z.string().min(1),
     email: z.string().email(),
     password: PasswordSchema,
+    phone: z.string().min(7).max(20),
+    gender: GenderSchema,
+    regionId: z.string().uuid(),
+    districtId: z.string().uuid(),
+    schoolId: z.string().uuid(),
+    subjectId: z.string().uuid(),
+    position: z.string().min(1),
+    experienceYears: z.coerce.number().int().min(0).max(60),
     locale: LocaleSchema.default(DEFAULT_LOCALE),
   })
   .refine((input) => assertNotDerived(input.password, input.email, input.fullName), {
@@ -31,10 +41,16 @@ export const SigninInputSchema = z.object({
   password: z.string(),
 });
 
+export const VerifyEmailInputSchema = z.object({
+  code: z.string().length(6),
+});
+
 // types
 
 export type SignupInput = z.infer<typeof SignupInputSchema>;
 export type SigninInput = z.infer<typeof SigninInputSchema>;
+export type VerifyEmailInput = z.infer<typeof VerifyEmailInputSchema>;
+export type Gender = z.infer<typeof GenderSchema>;
 
 // interfaces
 
@@ -42,13 +58,20 @@ export interface UserOutput {
   id: string;
   fullName: string;
   email: string;
-  role: 'ADMIN' | 'TEACHER' | 'STUDENT';
+  role: 'ADMIN' | 'TEACHER';
   phone: string | null;
+  gender: Gender | null;
   avatar: string | null;
   locale: string;
   emailVerified: boolean;
   active: boolean;
   isAdmin: boolean;
+  regionId: string | null;
+  districtId: string | null;
+  schoolId: string | null;
+  subjectId: string | null;
+  position: string | null;
+  experienceYears: number | null;
 }
 
 export interface AccessTokenOutput {

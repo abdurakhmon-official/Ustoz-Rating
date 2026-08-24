@@ -81,6 +81,7 @@
     "swagger-ui-dist": "^5.32.12",
     "ts-jest": "^29.2.5",
     "uuid": "^11.1.0",
+    "xlsx": "^0.18.5",
     "zod": "^3.25.76",
     "zod-prisma-types": "3.2.4",
     "zod-to-json-schema": "^3.25.2"

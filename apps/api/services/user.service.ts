@@ -4,7 +4,9 @@ import type { Request } from 'express';
 import { AdminUserQuerySchema } from '@repo/contracts';
 import prisma from '@/modules/db';
 import { badRequest, notFound, requireUserId } from '@/utils/errors.utils';
-import type { SetActiveInput, UpdateRoleInput } from '@/inputs/user.input';
+import { assertGeoConsistent } from '@/utils/geo-consistency.utils';
+import { USER_PUBLIC_SELECT } from '@/utils/constants';
+import type { SetActiveInput, UpdateProfileInput, UpdateRoleInput } from '@/inputs/user.input';
 import { USER_ROLE } from '../generated/prisma';
 
 @Injectable()
@@ -38,14 +40,49 @@ export class UserService {
     return user;
   }
 
-  /** AdminService.stats() uchun — rol bo'yicha foydalanuvchi soni. */
+  /** O'qituvchi faqat o'z profilini tahrirlaydi — boshqasini o'zgartira olmaydi (xavfsizlik talabi). */
+  async updateSelf(input: UpdateProfileInput) {
+    const userId = this.currentUserId;
+
+    const touchesGeo = input.regionId !== undefined || input.districtId !== undefined || input.schoolId !== undefined;
+
+    if (touchesGeo) {
+      const current = await prisma.user.findUniqueOrThrow({
+        where: { id: userId },
+        select: { regionId: true, districtId: true, schoolId: true },
+      });
+
+      const regionId = input.regionId ?? current.regionId;
+      const districtId = input.districtId ?? current.districtId;
+      const schoolId = input.schoolId ?? current.schoolId;
+
+      if (!regionId || !districtId || !schoolId) {
+        throw badRequest('GEO_INCOMPLETE', 'region, district and school must all be set together');
+      }
+
+      await assertGeoConsistent(regionId, districtId, schoolId);
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: input,
+      select: USER_PUBLIC_SELECT,
+    });
+
+    return {
+      success: true,
+      _code: 'PROFILE_UPDATED',
+      _message: 'Profile updated',
+      data: { ...user, isAdmin: user.role === USER_ROLE.ADMIN },
+    };
+  }
+
   async countByRole() {
     const grouped = await prisma.user.groupBy({ by: ['role'], _count: true });
     const countOf = (role: keyof typeof USER_ROLE) => grouped.find((group) => group.role === USER_ROLE[role])?._count ?? 0;
 
     return {
       total: grouped.reduce((sum, group) => sum + group._count, 0),
-      students: countOf('STUDENT'),
       teachers: countOf('TEACHER'),
       admins: countOf('ADMIN'),
     };

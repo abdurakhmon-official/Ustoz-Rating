@@ -23,9 +23,12 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
     },
+    setEmailVerified: (state) => {
+      if (state.user) state.user.emailVerified = true;
+    },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setEmailVerified } = authSlice.actions;
 export default authSlice.reducer;
 export type { AuthState };

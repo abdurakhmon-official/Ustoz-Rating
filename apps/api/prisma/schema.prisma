@@ -18,7 +18,16 @@ datasource db {
 enum USER_ROLE {
   ADMIN
   TEACHER
-  STUDENT
+}
+
+enum GENDER {
+  MALE
+  FEMALE
+}
+
+enum TEST_STATUS {
+  DRAFT
+  PUBLISHED
 }
 
 model User {
@@ -26,17 +35,149 @@ model User {
   fullName          String    @map("full_name")
   email             String    @unique
   password          String
-  role              USER_ROLE @default(STUDENT)
+  role              USER_ROLE @default(TEACHER)
   phone             String?
+  gender            GENDER?
   avatar            String?
-  locale            String    @default("en")
+  locale            String    @default("uz")
   emailVerified     Boolean   @default(false) @map("email_verified")
   passwordChangedAt DateTime? @map("password_changed_at")
   active            Boolean   @default(true)
-  createdAt         DateTime  @default(now()) @map("created_at")
-  updatedAt         DateTime  @updatedAt @map("updated_at")
-  deletedAt         DateTime? @map("deleted_at")
+
+  regionId   String? @map("region_id")
+  districtId String? @map("district_id")
+  schoolId   String? @map("school_id")
+  subjectId  String? @map("subject_id")
+  position   String?
+  experienceYears Int? @map("experience_years")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  region   Region?   @relation(fields: [regionId], references: [id], onDelete: SetNull)
+  district District? @relation(fields: [districtId], references: [id], onDelete: SetNull)
+  school   School?   @relation(fields: [schoolId], references: [id], onDelete: SetNull)
+  subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: SetNull)
 
   @@index([email])
+  @@index([regionId])
+  @@index([districtId])
+  @@index([schoolId])
+  @@index([subjectId])
   @@map("users")
+}
+
+model Region {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  order     Int        @default(0)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  districts District[]
+  schools   School[]
+  users     User[]
+
+  @@map("regions")
+}
+
+model District {
+  id        String   @id @default(uuid())
+  name      String
+  regionId  String   @map("region_id")
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  region  Region   @relation(fields: [regionId], references: [id], onDelete: Restrict)
+  schools School[]
+  users   User[]
+
+  @@unique([regionId, name])
+  @@index([regionId])
+  @@map("districts")
+}
+
+model School {
+  id         String   @id @default(uuid())
+  name       String
+  regionId   String   @map("region_id")
+  districtId String   @map("district_id")
+  isActive   Boolean  @default(true) @map("is_active")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  region   Region   @relation(fields: [regionId], references: [id], onDelete: Restrict)
+  district District @relation(fields: [districtId], references: [id], onDelete: Restrict)
+  users    User[]
+
+  @@unique([districtId, name])
+  @@index([regionId])
+  @@index([districtId])
+  @@map("schools")
+}
+
+model Subject {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  imageKey  String?  @map("image_key")
+  isActive  Boolean  @default(true) @map("is_active")
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  users     User[]
+  tests     Test[]
+
+  @@map("subjects")
+}
+
+model Test {
+  id              String      @id @default(uuid())
+  title           String
+  subjectId       String      @map("subject_id")
+  description     String?
+  durationMinutes Int         @map("duration_minutes")
+  passingScore    Int         @map("passing_score")
+  status          TEST_STATUS @default(DRAFT)
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  subject   Subject    @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+  questions Question[]
+
+  @@index([subjectId])
+  @@index([status])
+  @@map("tests")
+}
+
+model Question {
+  id           String   @id @default(uuid())
+  testId       String   @map("test_id")
+  text         String
+  options      String[]
+  correctIndex Int      @map("correct_index")
+  imageKey     String?  @map("image_key")
+  order        Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  test Test @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  @@index([testId, order])
+  @@map("questions")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String   @map("actor_id")
+  action    String
+  entity    String
+  entityId  String   @map("entity_id")
+  before    Json?
+  after     Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([entity, entityId])
+  @@index([actorId])
+  @@map("audit_logs")
 }

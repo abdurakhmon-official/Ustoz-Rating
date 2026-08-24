@@ -1,0 +1,229 @@
+{
+  "nav": {
+    "brand": "Ustoz Rating",
+    "signIn": "Kirish",
+    "signUp": "Ro'yxatdan o'tish",
+    "signOut": "Chiqish",
+    "profile": "Profilim",
+    "admin": "Admin panel",
+    "openMenu": "Menyuni ochish",
+    "closeMenu": "Menyuni yopish"
+  },
+  "home": {
+    "title": "O'qituvchilar bilimini aniqlash va reyting platformasi",
+    "subtitle": "Fanlar bo'yicha bilim testlarini topshiring, natijangizni ko'ring va respublika reytingida o'rningizni egallang.",
+    "getStarted": "Ro'yxatdan o'tish",
+    "signIn": "Kirish"
+  },
+  "footer": {
+    "copyright": "© {year} Ustoz Rating"
+  },
+  "auth": {
+    "fields": {
+      "fullName": "F.I.Sh.",
+      "email": "Email",
+      "password": "Parol",
+      "phone": "Telefon raqam",
+      "gender": "Jins",
+      "genderMale": "Erkak",
+      "genderFemale": "Ayol",
+      "region": "Viloyat",
+      "district": "Tuman/shahar",
+      "school": "Maktab",
+      "subject": "Fan",
+      "position": "Lavozim",
+      "experienceYears": "Ish tajribasi (yil)",
+      "selectPlaceholder": "Tanlang…"
+    },
+    "sections": {
+      "personal": "Shaxsiy ma'lumotlar",
+      "workplace": "Ish joyi"
+    },
+    "signIn": {
+      "title": "Tizimga kirish",
+      "subtitle": "Davom etish uchun ma'lumotlaringizni kiriting.",
+      "submit": "Kirish",
+      "loading": "Kirilmoqda…"
+    },
+    "signUp": {
+      "title": "Ro'yxatdan o'tish",
+      "subtitle": "Bilimingizni sinang va reytingda o'z o'rningizni egallang.",
+      "submit": "Ro'yxatdan o'tish",
+      "loading": "Yaratilmoqda…"
+    },
+    "verifyEmail": {
+      "title": "Emailingizni tasdiqlang",
+      "subtitle": "Emailingizga yuborilgan 6 xonali kodni kiriting.",
+      "code": "Tasdiqlash kodi",
+      "submit": "Tasdiqlash",
+      "loading": "Tekshirilmoqda…",
+      "resend": "Kodni qayta yuborish",
+      "resendLoading": "Yuborilmoqda…",
+      "success": "Email muvaffaqiyatli tasdiqlandi",
+      "continue": "Davom etish"
+    }
+  },
+  "profile": {
+    "title": "Mening profilim",
+    "editTitle": "Ma'lumotlarni tahrirlash",
+    "uploadAvatar": "Rasm yuklash",
+    "uploading": "Yuklanmoqda…",
+    "role": {
+      "ADMIN": "Admin",
+      "TEACHER": "O'qituvchi"
+    },
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda…",
+    "emailVerified": "Email tasdiqlangan",
+    "emailNotVerified": "Email tasdiqlanmagan"
+  },
+  "admin": {
+    "nav": {
+      "users": "O'qituvchilar",
+      "tests": "Testlar",
+      "subjects": "Fanlar",
+      "geo": "Hudud"
+    },
+    "users": {
+      "title": "O'qituvchilar",
+      "search": "Ism yoki email bo'yicha qidirish",
+      "allRoles": "Barcha rollar",
+      "role": {
+        "ADMIN": "Admin",
+        "TEACHER": "O'qituvchi"
+      },
+      "active": "Faol",
+      "inactive": "Bloklangan",
+      "activate": "Faollashtirish",
+      "deactivate": "Bloklash",
+      "empty": "O'qituvchi topilmadi"
+    },
+    "tests": {
+      "title": "Testlar",
+      "add": "Yangi test",
+      "search": "Test nomi bo'yicha qidirish",
+      "allSubjects": "Barcha fanlar",
+      "allStatuses": "Barcha holatlar",
+      "status": {
+        "DRAFT": "Qoralama",
+        "PUBLISHED": "Chop etilgan"
+      },
+      "questionCount": "{count} ta savol",
+      "duration": "{minutes} daqiqa",
+      "passingScore": "O'tish bali: {score}%",
+      "empty": "Testlar yo'q",
+      "edit": "Tahrirlash",
+      "delete": "O'chirish",
+      "fields": {
+        "title": "Test nomi",
+        "subject": "Fan",
+        "description": "Tavsif",
+        "durationMinutes": "Davomiyligi (daqiqa)",
+        "passingScore": "O'tish bali (%)"
+      },
+      "create": "Yaratish",
+      "save": "Saqlash",
+      "publish": "Chop etish",
+      "unpublish": "Qoralamaga qaytarish",
+      "backToList": "Testlar ro'yxatiga qaytish",
+      "questions": {
+        "title": "Savollar",
+        "add": "Savol qo'shish",
+        "empty": "Savollar yo'q",
+        "text": "Savol matni",
+        "optionA": "A-variant",
+        "optionB": "B-variant",
+        "optionC": "C-variant",
+        "optionD": "D-variant",
+        "correctAnswer": "To'g'ri javob",
+        "image": "Rasm",
+        "save": "Saqlash",
+        "cancel": "Bekor qilish",
+        "edit": "Tahrirlash",
+        "delete": "O'chirish"
+      },
+      "import": {
+        "title": "Excel/CSV orqali import",
+        "hint": "Ustunlar: Savol, A, B, C, D, To'g'ri javob (A/B/C yoki D)",
+        "button": "Fayl tanlash",
+        "uploading": "Yuklanmoqda…",
+        "imported": "{count} ta savol qo'shildi",
+        "errorsTitle": "Xatoliklar:",
+        "rowError": "{row}-qator: {message}"
+      }
+    },
+    "subjects": {
+      "title": "Fanlar",
+      "add": "Fan qo'shish",
+      "edit": "Tahrirlash",
+      "name": "Fan nomi",
+      "image": "Rasm",
+      "active": "Faol",
+      "inactive": "Nofaol",
+      "activate": "Faollashtirish",
+      "deactivate": "Faolsizlantirish",
+      "save": "Saqlash",
+      "cancel": "Bekor qilish",
+      "empty": "Fanlar yo'q"
+    },
+    "geo": {
+      "title": "Hudud",
+      "regions": "Viloyatlar",
+      "districts": "Tumanlar",
+      "schools": "Maktablar",
+      "addRegion": "Viloyat qo'shish",
+      "addDistrict": "Tuman qo'shish",
+      "addSchool": "Maktab qo'shish",
+      "selectRegion": "Tumanlarni ko'rish uchun viloyat tanlang",
+      "selectDistrict": "Maktablarni ko'rish uchun tuman tanlang",
+      "namePlaceholder": "Nomi",
+      "delete": "O'chirish",
+      "emptyRegions": "Viloyatlar yo'q",
+      "emptyDistricts": "Tumanlar yo'q",
+      "emptySchools": "Maktablar yo'q"
+    }
+  },
+  "serverMessages": {
+    "AUTH_EMAIL_TAKEN": "Bu email allaqachon ro'yxatdan o'tgan",
+    "AUTH_INVALID_CREDENTIALS": "Email yoki parol noto'g'ri",
+    "AUTH_ACCOUNT_INACTIVE": "Bu hisob faol emas",
+    "AUTH_USER_NOT_FOUND": "Foydalanuvchi topilmadi",
+    "AUTH_UNAUTHORIZED": "Ruxsat yo'q",
+    "AUTH_SIGNED_UP": "Muvaffaqiyatli ro'yxatdan o'tdingiz",
+    "AUTH_SIGNED_OUT": "Tizimdan chiqdingiz",
+    "AUTH_VERIFICATION_CODE_INVALID": "Tasdiqlash kodi noto'g'ri yoki muddati o'tgan",
+    "AUTH_EMAIL_VERIFIED": "Email tasdiqlandi",
+    "AUTH_VERIFICATION_SENT": "Tasdiqlash kodi yuborildi",
+    "AUTH_EMAIL_ALREADY_VERIFIED": "Email allaqachon tasdiqlangan",
+    "GEO_DISTRICT_MISMATCH": "Tanlangan tuman shu viloyatga tegishli emas",
+    "GEO_SCHOOL_MISMATCH": "Tanlangan maktab shu tumanga tegishli emas",
+    "GEO_INCOMPLETE": "Viloyat, tuman va maktab birgalikda to'ldirilishi kerak",
+    "SUBJECT_NAME_TAKEN": "Bu nomdagi fan allaqachon mavjud",
+    "SUBJECT_NOT_FOUND": "Fan topilmadi",
+    "REGION_NAME_TAKEN": "Bu nomdagi viloyat allaqachon mavjud",
+    "REGION_NOT_FOUND": "Viloyat topilmadi",
+    "REGION_IN_USE": "Bu viloyatda ro'yxatdan o'tgan o'qituvchilar bor, o'chirib bo'lmaydi",
+    "DISTRICT_NAME_TAKEN": "Bu nomdagi tuman shu viloyatda allaqachon mavjud",
+    "DISTRICT_NOT_FOUND": "Tuman topilmadi",
+    "DISTRICT_IN_USE": "Bu tumanda ro'yxatdan o'tgan o'qituvchilar bor, o'chirib bo'lmaydi",
+    "SCHOOL_NAME_TAKEN": "Bu nomdagi maktab shu tumanda allaqachon mavjud",
+    "SCHOOL_NOT_FOUND": "Maktab topilmadi",
+    "PROFILE_UPDATED": "Profil yangilandi",
+    "TEST_NOT_FOUND": "Test topilmadi",
+    "TEST_HAS_NO_QUESTIONS": "Savolsiz testni chop etib bo'lmaydi",
+    "QUESTION_NOT_FOUND": "Savol topilmadi",
+    "IMPORT_TOO_MANY_ROWS": "Faylda juda ko'p qator bor",
+    "IMPORT_FILE_UNREADABLE": "Fayl o'qib bo'lmadi — Excel yoki CSV formatida ekanligiga ishonch hosil qiling",
+    "IMPORT_FILE_EMPTY": "Faylda ma'lumot yo'q",
+    "IMPORT_FILE_REQUIRED": "Fayl talab qilinadi",
+    "IMPORT_ROW_TEXT_EMPTY": "Savol matni bo'sh",
+    "IMPORT_ROW_OPTIONS_INCOMPLETE": "Barcha 4 ta variant to'ldirilishi kerak",
+    "IMPORT_ROW_ANSWER_INVALID": "To'g'ri javob A, B, C yoki D bo'lishi kerak",
+    "VALIDATION_PASSWORD_SHORT": "Parol juda qisqa",
+    "VALIDATION_PASSWORD_LONG": "Parol juda uzun",
+    "VALIDATION_PASSWORD_PERSONAL": "Parol ismingiz yoki emailingizni o'z ichiga olmasligi kerak",
+    "VALIDATION_FAILED": "Kiritilgan ma'lumotlar noto'g'ri",
+    "RATE_LIMITED": "So'rovlar soni chegaradan oshdi, birozdan so'ng qayta urinib ko'ring",
+    "ADMIN_CANNOT_MODIFY_SELF": "O'zingizning rolingizni yoki holatingizni o'zgartira olmaysiz"
+  }
+}

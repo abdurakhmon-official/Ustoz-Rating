@@ -1,4 +1,4 @@
-import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput } from '@repo/contracts';
+import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput, VerifyEmailInput } from '@repo/contracts';
 import { BaseService } from '@/lib/services/base.service';
 
 export class AuthService extends BaseService<UserOutput, SignupInput, never> {
@@ -18,6 +18,14 @@ export class AuthService extends BaseService<UserOutput, SignupInput, never> {
 
   async me() {
     return this.sendGet<UserOutput>('/me');
+  }
+
+  async verifyEmail(input: VerifyEmailInput) {
+    return this.sendPost<void>('/verify-email', input);
+  }
+
+  async resendVerification() {
+    return this.sendPost<void>('/resend-verification', {});
   }
 }
 

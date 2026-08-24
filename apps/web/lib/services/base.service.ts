@@ -48,6 +48,11 @@ export abstract class BaseService<T, TCreateInput = unknown, TUpdateInput = unkn
     return data.data;
   }
 
+  protected async sendPatch<R, I = unknown>(path: string, input: I): Promise<R> {
+    const { data } = await api.patch<ApiResponse<R>>(`/${this.BASE_PATH}${path}`, input);
+    return data.data;
+  }
+
   protected async sendDelete<R = void>(path: string): Promise<R> {
     const { data } = await api.delete<ApiResponse<R>>(`/${this.BASE_PATH}${path}`);
     return data.data;

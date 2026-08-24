@@ -1,10 +1,13 @@
-/**
- * Central query key registry (rule: CODING_STANDARDS.md §4).
- * Add new domains here — never write a query key array inline in useQuery.
- */
 export const queryKeys = {
   me: ['me'] as const,
-  /* base keys — used as a param-less prefix with invalidateQueries (cancels all pages/filters at once) */
   adminUsersBase: ['admin-users'] as const,
   adminUsers: (query: Record<string, unknown> = {}) => [...queryKeys.adminUsersBase, query] as const,
+  regions: ['regions'] as const,
+  districts: (regionId: string) => ['districts', regionId] as const,
+  schools: (districtId: string) => ['schools', districtId] as const,
+  subjects: ['subjects'] as const,
+  adminSubjects: ['admin-subjects'] as const,
+  adminTestsBase: ['admin-tests'] as const,
+  adminTests: (query: Record<string, unknown> = {}) => [...queryKeys.adminTestsBase, query] as const,
+  adminTest: (testId: string) => ['admin-test', testId] as const,
 };
