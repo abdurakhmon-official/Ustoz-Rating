@@ -12,6 +12,7 @@ import { verificationEmail } from '@/utils/mail-templates.utils';
 import { assertGeoConsistent } from '@/utils/geo-consistency.utils';
 import { TooManyRequests } from '@/middlewares/rate-limit.middleware';
 import { TokenService } from '@/services/token.service';
+import { GeoService } from '@/services/geo.service';
 import { USER_PUBLIC_SELECT } from '@/utils/constants';
 import { USER_ROLE } from '../generated/prisma';
 import type { SignupInput, SigninInput, VerifyEmailInput } from '@/inputs/auth.input';
@@ -23,6 +24,9 @@ export class AuthService {
 
   @Inject()
   private tokenService!: TokenService;
+
+  @Inject()
+  private geoService!: GeoService;
 
   private get request() {
     return this.context.getRequest<Request>();
@@ -38,7 +42,10 @@ export class AuthService {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) throw badRequest('AUTH_EMAIL_TAKEN', 'This email is already registered');
 
-    await assertGeoConsistent(input.regionId, input.districtId, input.schoolId);
+    const schoolId = input.schoolId
+      ?? (await this.geoService.getOrCreateSchoolByName(input.districtId, input.regionId, input.schoolName!)).id;
+
+    await assertGeoConsistent(input.regionId, input.districtId, schoolId);
 
     const user = await prisma.user.create({
       data: {
@@ -51,7 +58,7 @@ export class AuthService {
         gender: input.gender,
         regionId: input.regionId,
         districtId: input.districtId,
-        schoolId: input.schoolId,
+        schoolId,
         subjectId: input.subjectId,
         position: input.position,
         experienceYears: input.experienceYears,

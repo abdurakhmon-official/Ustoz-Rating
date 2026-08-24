@@ -1,11 +1,14 @@
 'use client';
 
+import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import type { DistrictOutput, RegionOutput, SchoolOutput } from '@repo/contracts';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { FormField } from '@/components/ui/FormField';
 import { Input } from '@/components/ui/Input';
+import { Modal } from '@/components/ui/Modal';
 import { cn } from '@/lib/utils';
 import {
   useCreateDistrict,
@@ -50,6 +53,62 @@ export function AdminGeoView() {
   );
 }
 
+function ColumnHeader({ title, onAdd, addLabel }: { title: string; onAdd: () => void; addLabel: string }) {
+  return (
+    <CardHeader className="flex flex-row items-center justify-between space-y-0">
+      <CardTitle className="text-base">{title}</CardTitle>
+      <Button type="button" variant="outline" size="sm" onClick={onAdd} aria-label={addLabel}>
+        <Plus className="size-4" />
+      </Button>
+    </CardHeader>
+  );
+}
+
+function AddNameModal({
+  open,
+  onClose,
+  title,
+  onSubmit,
+  isPending,
+}: {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  onSubmit: (name: string) => Promise<unknown>;
+  isPending: boolean;
+}) {
+  const t = useTranslations('admin.geo');
+  const [name, setName] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!name.trim()) return;
+
+    await onSubmit(name.trim());
+    setName('');
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title={title}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <FormField label={t('name')} htmlFor="geo-name">
+          <Input id="geo-name" value={name} onChange={(event) => setName(event.target.value)} placeholder={t('namePlaceholder')} autoFocus />
+        </FormField>
+
+        <div className="mt-2 flex justify-end gap-2 border-t border-border pt-4">
+          <Button type="button" variant="ghost" size="sm" onClick={onClose}>
+            {t('cancel')}
+          </Button>
+          <Button type="submit" size="sm" disabled={isPending || !name.trim()}>
+            {isPending ? t('saving') : t('save')}
+          </Button>
+        </div>
+      </form>
+    </Modal>
+  );
+}
+
 function RegionColumn({
   regions,
   selectedId,
@@ -60,36 +119,28 @@ function RegionColumn({
   onSelect: (id: string) => void;
 }) {
   const t = useTranslations('admin.geo');
-  const [name, setName] = useState('');
+  const [adding, setAdding] = useState(false);
   const createRegion = useCreateRegion();
   const deleteRegion = useDeleteRegion();
 
-  const onAdd = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!name.trim()) return;
-    await createRegion.mutateAsync({ name });
-    setName('');
-  };
-
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-base">{t('regions')}</CardTitle>
-      </CardHeader>
+      <ColumnHeader title={t('regions')} addLabel={t('addRegion')} onAdd={() => setAdding(true)} />
       <CardContent className="flex flex-col gap-2">
         {!regions.length && <p className="text-sm text-muted-foreground">{t('emptyRegions')}</p>}
 
         {regions.map((region) => (
           <GeoRow key={region.id} label={region.name} active={region.id === selectedId} onClick={() => onSelect(region.id)} onDelete={() => deleteRegion.mutate(region.id)} />
         ))}
-
-        <form onSubmit={onAdd} className="mt-2 flex gap-2">
-          <Input value={name} onChange={(event) => setName(event.target.value)} placeholder={t('namePlaceholder')} className="h-9" />
-          <Button type="submit" size="sm" disabled={createRegion.isPending}>
-            {t('addRegion')}
-          </Button>
-        </form>
       </CardContent>
+
+      <AddNameModal
+        open={adding}
+        onClose={() => setAdding(false)}
+        title={t('addRegion')}
+        isPending={createRegion.isPending}
+        onSubmit={(name) => createRegion.mutateAsync({ name })}
+      />
     </Card>
   );
 }
@@ -106,22 +157,13 @@ function DistrictColumn({
   onSelect: (id: string) => void;
 }) {
   const t = useTranslations('admin.geo');
-  const [name, setName] = useState('');
+  const [adding, setAdding] = useState(false);
   const createDistrict = useCreateDistrict();
   const deleteDistrict = useDeleteDistrict();
 
-  const onAdd = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!name.trim() || !regionId) return;
-    await createDistrict.mutateAsync({ name, regionId });
-    setName('');
-  };
-
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-base">{t('districts')}</CardTitle>
-      </CardHeader>
+      <ColumnHeader title={t('districts')} addLabel={t('addDistrict')} onAdd={() => setAdding(true)} />
       <CardContent className="flex flex-col gap-2">
         {!regionId ? (
           <p className="text-sm text-muted-foreground">{t('selectRegion')}</p>
@@ -138,16 +180,17 @@ function DistrictColumn({
             />
           ))
         )}
-
-        {regionId && (
-          <form onSubmit={onAdd} className="mt-2 flex gap-2">
-            <Input value={name} onChange={(event) => setName(event.target.value)} placeholder={t('namePlaceholder')} className="h-9" />
-            <Button type="submit" size="sm" disabled={createDistrict.isPending}>
-              {t('addDistrict')}
-            </Button>
-          </form>
-        )}
       </CardContent>
+
+      {regionId && (
+        <AddNameModal
+          open={adding}
+          onClose={() => setAdding(false)}
+          title={t('addDistrict')}
+          isPending={createDistrict.isPending}
+          onSubmit={(name) => createDistrict.mutateAsync({ name, regionId })}
+        />
+      )}
     </Card>
   );
 }
@@ -162,22 +205,13 @@ function SchoolColumn({
   schools: SchoolOutput[];
 }) {
   const t = useTranslations('admin.geo');
-  const [name, setName] = useState('');
+  const [adding, setAdding] = useState(false);
   const createSchool = useCreateSchool();
   const deleteSchool = useDeleteSchool();
 
-  const onAdd = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!name.trim() || !regionId || !districtId) return;
-    await createSchool.mutateAsync({ name, regionId, districtId });
-    setName('');
-  };
-
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-base">{t('schools')}</CardTitle>
-      </CardHeader>
+      <ColumnHeader title={t('schools')} addLabel={t('addSchool')} onAdd={() => setAdding(true)} />
       <CardContent className="flex flex-col gap-2">
         {!districtId ? (
           <p className="text-sm text-muted-foreground">{t('selectDistrict')}</p>
@@ -192,16 +226,17 @@ function SchoolColumn({
             />
           ))
         )}
-
-        {districtId && (
-          <form onSubmit={onAdd} className="mt-2 flex gap-2">
-            <Input value={name} onChange={(event) => setName(event.target.value)} placeholder={t('namePlaceholder')} className="h-9" />
-            <Button type="submit" size="sm" disabled={createSchool.isPending}>
-              {t('addSchool')}
-            </Button>
-          </form>
-        )}
       </CardContent>
+
+      {regionId && districtId && (
+        <AddNameModal
+          open={adding}
+          onClose={() => setAdding(false)}
+          title={t('addSchool')}
+          isPending={createSchool.isPending}
+          onSubmit={(name) => createSchool.mutateAsync({ name, regionId, districtId })}
+        />
+      )}
     </Card>
   );
 }

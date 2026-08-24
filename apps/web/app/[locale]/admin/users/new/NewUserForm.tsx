@@ -29,12 +29,16 @@ export function NewUserForm() {
     register,
     handleSubmit,
     watch,
+    setValue,
     setError,
     formState: { errors },
   } = useForm<NewUserFormValues>({ resolver: zodResolver(AdminCreateUserInputSchema), defaultValues: { role: 'TEACHER' } });
 
+  const role = watch('role');
   const regionId = watch('regionId');
   const districtId = watch('districtId');
+  const schoolId = watch('schoolId');
+  const subjectId = watch('subjectId');
 
   const { data: regions } = useRegions();
   const { data: districts } = useDistricts(regionId);
@@ -73,7 +77,7 @@ export function NewUserForm() {
             </div>
 
             <FormField label={t('roleLabel')} htmlFor="role" error={errors.role?.message}>
-              <Select id="role" {...register('role')}>
+              <Select id="role" value={role ?? 'TEACHER'} onChange={(value) => setValue('role', value as NewUserFormValues['role'])}>
                 <option value="TEACHER">{tUsers('role.TEACHER')}</option>
                 <option value="ADMIN">{tUsers('role.ADMIN')}</option>
               </Select>
@@ -85,7 +89,7 @@ export function NewUserForm() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField label={tAuth('fields.region')} htmlFor="regionId" error={errors.regionId?.message}>
-                <Select id="regionId" {...register('regionId')}>
+                <Select id="regionId" value={regionId ?? ''} onChange={(value) => setValue('regionId', value)}>
                   <option value="">{tAuth('fields.selectPlaceholder')}</option>
                   {regions?.map((region) => (
                     <option key={region.id} value={region.id}>
@@ -96,7 +100,7 @@ export function NewUserForm() {
               </FormField>
 
               <FormField label={tAuth('fields.district')} htmlFor="districtId" error={errors.districtId?.message}>
-                <Select id="districtId" disabled={!regionId} {...register('districtId')}>
+                <Select id="districtId" disabled={!regionId} value={districtId ?? ''} onChange={(value) => setValue('districtId', value)}>
                   <option value="">{tAuth('fields.selectPlaceholder')}</option>
                   {districts?.map((district) => (
                     <option key={district.id} value={district.id}>
@@ -108,7 +112,7 @@ export function NewUserForm() {
             </div>
 
             <FormField label={tAuth('fields.school')} htmlFor="schoolId" error={errors.schoolId?.message}>
-              <Select id="schoolId" disabled={!districtId} {...register('schoolId')}>
+              <Select id="schoolId" disabled={!districtId} value={schoolId ?? ''} onChange={(value) => setValue('schoolId', value)}>
                 <option value="">{tAuth('fields.selectPlaceholder')}</option>
                 {schools?.map((school) => (
                   <option key={school.id} value={school.id}>
@@ -120,7 +124,7 @@ export function NewUserForm() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField label={tAuth('fields.subject')} htmlFor="subjectId" error={errors.subjectId?.message}>
-                <Select id="subjectId" {...register('subjectId')}>
+                <Select id="subjectId" value={subjectId ?? ''} onChange={(value) => setValue('subjectId', value)}>
                   <option value="">{tAuth('fields.selectPlaceholder')}</option>
                   {subjects?.map((subject) => (
                     <option key={subject.id} value={subject.id}>

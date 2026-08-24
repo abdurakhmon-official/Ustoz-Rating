@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { AttemptInProgress, SubmitAttemptInput } from '@repo/contracts';
 import { Button } from '@/components/ui/Button';
+import { Modal } from '@/components/ui/Modal';
 import { Progress } from '@/components/ui/Progress';
 import { assetUrl, cn } from '@/lib/utils';
 import { useSubmitAttempt } from '@/hooks/use-attempts';
@@ -30,6 +31,7 @@ export function TestTakingView({ attempt }: { attempt: AttemptInProgress }) {
   const [remainingSeconds, setRemainingSeconds] = useState(() => Math.max(0, Math.round((deadline - Date.now()) / 1000)));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [confirmingFinish, setConfirmingFinish] = useState(false);
 
   const answersRef = useRef(answers);
   answersRef.current = answers;
@@ -66,9 +68,10 @@ export function TestTakingView({ attempt }: { attempt: AttemptInProgress }) {
     setAnswers((prev) => ({ ...prev, [question.id]: optionIndex }));
   };
 
-  const onFinish = () => {
-    // eslint-disable-next-line no-alert
-    if (!window.confirm(t('confirmFinish'))) return;
+  const onFinish = () => setConfirmingFinish(true);
+
+  const onConfirmFinish = () => {
+    setConfirmingFinish(false);
     submit({ answers });
   };
 
@@ -146,6 +149,20 @@ export function TestTakingView({ attempt }: { attempt: AttemptInProgress }) {
           </Button>
         )}
       </div>
+
+      <Modal open={confirmingFinish} onClose={() => setConfirmingFinish(false)} title={t('confirmFinishTitle')}>
+        <p className="text-sm text-muted-foreground">{t('confirmFinish')}</p>
+        <p className="text-sm font-medium">{t('confirmFinishAnswered', { answered: answeredCount, total: attempt.questions.length })}</p>
+
+        <div className="mt-2 flex justify-end gap-2 border-t border-border pt-4">
+          <Button type="button" variant="ghost" size="sm" onClick={() => setConfirmingFinish(false)}>
+            {t('confirmFinishCancel')}
+          </Button>
+          <Button type="button" size="sm" onClick={onConfirmFinish}>
+            {t('finish')}
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

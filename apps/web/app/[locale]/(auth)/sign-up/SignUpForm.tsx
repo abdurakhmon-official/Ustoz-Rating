@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 import { SignupInputSchema, type SignupInput } from '@repo/contracts';
@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/Input';
 import { RadioGroup } from '@/components/ui/RadioGroup';
 import { Select } from '@/components/ui/Select';
 import { errorFrom } from '@/lib/errors';
+import { messageFor } from '@/lib/messages';
 import { useRouter } from '@/i18n/navigation';
 import { useSignUp } from '@/hooks/use-auth';
 import { useDistricts, useRegions, useSchools } from '@/hooks/use-geo';
@@ -39,7 +40,10 @@ export function SignUpForm() {
 
   const regionId = watch('regionId');
   const districtId = watch('districtId');
+  const schoolId = watch('schoolId');
+  const subjectId = watch('subjectId');
   const gender = watch('gender');
+  const [newSchool, setNewSchool] = useState(false);
 
   const { data: regions } = useRegions();
   const { data: districts } = useDistricts(regionId);
@@ -49,11 +53,21 @@ export function SignUpForm() {
   useEffect(() => {
     setValue('districtId', '' as SignUpFormValues['districtId']);
     setValue('schoolId', '' as SignUpFormValues['schoolId']);
+    setValue('schoolName', undefined);
+    setNewSchool(false);
   }, [regionId, setValue]);
 
   useEffect(() => {
     setValue('schoolId', '' as SignUpFormValues['schoolId']);
+    setValue('schoolName', undefined);
+    setNewSchool(false);
   }, [districtId, setValue]);
+
+  const toggleNewSchool = () => {
+    setValue('schoolId', '' as SignUpFormValues['schoolId']);
+    setValue('schoolName', undefined);
+    setNewSchool((value) => !value);
+  };
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -113,7 +127,7 @@ export function SignUpForm() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField label={t('fields.region')} htmlFor="regionId" error={errors.regionId?.message}>
-                <Select id="regionId" {...register('regionId')}>
+                <Select id="regionId" value={regionId ?? ''} onChange={(value) => setValue('regionId', value as SignUpFormValues['regionId'])}>
                   <option value="">{t('fields.selectPlaceholder')}</option>
                   {regions?.map((region) => (
                     <option key={region.id} value={region.id}>
@@ -124,7 +138,12 @@ export function SignUpForm() {
               </FormField>
 
               <FormField label={t('fields.district')} htmlFor="districtId" error={errors.districtId?.message}>
-                <Select id="districtId" disabled={!regionId} {...register('districtId')}>
+                <Select
+                  id="districtId"
+                  disabled={!regionId}
+                  value={districtId ?? ''}
+                  onChange={(value) => setValue('districtId', value as SignUpFormValues['districtId'])}
+                >
                   <option value="">{t('fields.selectPlaceholder')}</option>
                   {districts?.map((district) => (
                     <option key={district.id} value={district.id}>
@@ -135,20 +154,41 @@ export function SignUpForm() {
               </FormField>
             </div>
 
-            <FormField label={t('fields.school')} htmlFor="schoolId" error={errors.schoolId?.message}>
-              <Select id="schoolId" disabled={!districtId} {...register('schoolId')}>
-                <option value="">{t('fields.selectPlaceholder')}</option>
-                {schools?.map((school) => (
-                  <option key={school.id} value={school.id}>
-                    {school.name}
-                  </option>
-                ))}
-              </Select>
+            <FormField
+              label={t('fields.school')}
+              htmlFor="schoolId"
+              error={messageFor(errors.schoolId?.message ?? errors.schoolName?.message, errors.schoolId?.message ?? errors.schoolName?.message) ?? undefined}
+            >
+              {newSchool ? (
+                <Input id="schoolId" placeholder={t('fields.schoolNamePlaceholder')} disabled={!districtId} {...register('schoolName')} />
+              ) : (
+                <Select
+                  id="schoolId"
+                  disabled={!districtId}
+                  value={String(schoolId ?? '')}
+                  onChange={(value) => setValue('schoolId', value as SignUpFormValues['schoolId'])}
+                >
+                  <option value="">{t('fields.selectPlaceholder')}</option>
+                  {schools?.map((school) => (
+                    <option key={school.id} value={school.id}>
+                      {school.name}
+                    </option>
+                  ))}
+                </Select>
+              )}
+              <button
+                type="button"
+                onClick={toggleNewSchool}
+                disabled={!districtId}
+                className="self-start text-sm text-primary hover:underline disabled:opacity-50"
+              >
+                {newSchool ? t('fields.chooseFromList') : t('fields.schoolNotListed')}
+              </button>
             </FormField>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField label={t('fields.subject')} htmlFor="subjectId" error={errors.subjectId?.message}>
-                <Select id="subjectId" {...register('subjectId')}>
+                <Select id="subjectId" value={subjectId ?? ''} onChange={(value) => setValue('subjectId', value as SignUpFormValues['subjectId'])}>
                   <option value="">{t('fields.selectPlaceholder')}</option>
                   {subjects?.map((subject) => (
                     <option key={subject.id} value={subject.id}>

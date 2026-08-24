@@ -100,6 +100,9 @@
       "region": "Viloyat",
       "district": "Tuman/shahar",
       "school": "Maktab",
+      "schoolNotListed": "Maktabim ro'yxatda yo'q",
+      "schoolNamePlaceholder": "Maktab nomini kiriting",
+      "chooseFromList": "Ro'yxatdan tanlash",
       "subject": "Fan",
       "position": "Lavozim",
       "experienceYears": "Ish tajribasi (yil)",
@@ -182,7 +185,10 @@
       "previous": "Oldingi",
       "next": "Keyingi",
       "finish": "Yakunlash",
+      "confirmFinishTitle": "Testni yakunlash",
       "confirmFinish": "Testni yakunlaysizmi? Javob berilmagan savollar noto'g'ri hisoblanadi.",
+      "confirmFinishAnswered": "Javob berilgan: {answered} / {total}",
+      "confirmFinishCancel": "Davom etish",
       "timeUpTitle": "Vaqt tugadi",
       "timeUpMessage": "Test avtomatik yakunlandi.",
       "submitting": "Yuborilmoqda…",
@@ -238,6 +244,8 @@
       "region": "Viloyat",
       "district": "Tuman",
       "notEligible": "Reytingga kirish uchun yetarli test topshiring",
+      "place": "{rank}-o'rin",
+      "notRanked": "Reytingda yo'q",
       "of": "{total} tadan"
     },
     "top": {
@@ -279,9 +287,15 @@
     },
     "certificateTemplate": {
       "title": "Sertifikat matni shabloni",
-      "hint": "Quyidagi joy egallovchilardan foydalanishingiz mumkin: '{'fullName'}', '{'subject'}', '{'score'}'",
+      "hint": "Quyidagilardan birini bosib matnga qo'shing:",
       "text": "Shablon matni",
-      "save": "Saqlash"
+      "save": "Saqlash",
+      "preview": "Ko'rinishi (namuna)",
+      "placeholders": {
+        "fullName": "O'qituvchi F.I.Sh.",
+        "subject": "Fan nomi",
+        "score": "Natija (foiz)"
+      }
     },
     "legal": {
       "title": "Huquqiy hujjatlar",
@@ -301,11 +315,14 @@
         "RATING_CHANGED": "Reyting o'zgardi",
         "CERTIFICATE_ISSUED": "Sertifikat berildi"
       },
-      "hint": {
-        "TEST_PUBLISHED": "Joy egallovchilar: '{'subject'}', '{'title'}'",
-        "ATTEMPT_RESULT": "Joy egallovchilar: '{'title'}', '{'score'}', '{'status'}'",
-        "RATING_CHANGED": "Joy egallovchilar: '{'delta'}'",
-        "CERTIFICATE_ISSUED": "Joy egallovchilar: '{'subject'}', '{'score'}'"
+      "hint": "Quyidagilardan birini bosib matnga qo'shing:",
+      "preview": "Ko'rinishi (namuna)",
+      "placeholders": {
+        "subject": "Fan nomi",
+        "title": "Test nomi",
+        "score": "Natija (foiz)",
+        "status": "Holat (o'tdi / o'tmadi)",
+        "delta": "Necha pog'ona ko'tarilgani"
       }
     },
     "users": {
@@ -399,12 +416,16 @@
       "add": "Fan qo'shish",
       "edit": "Tahrirlash",
       "name": "Fan nomi",
+      "namePlaceholder": "Masalan: Matematika",
       "image": "Rasm",
+      "changeImage": "Rasmni tanlash",
+      "noImage": "Rasm tanlanmagan",
       "active": "Faol",
       "inactive": "Nofaol",
       "activate": "Faollashtirish",
       "deactivate": "Faolsizlantirish",
       "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
       "cancel": "Bekor qilish",
       "empty": "Fanlar yo'q"
     },
@@ -413,13 +434,17 @@
       "regions": "Viloyatlar",
       "districts": "Tumanlar",
       "schools": "Maktablar",
-      "addRegion": "Viloyat qo'shish",
-      "addDistrict": "Tuman qo'shish",
-      "addSchool": "Maktab qo'shish",
+      "addRegion": "Yangi viloyat",
+      "addDistrict": "Yangi tuman",
+      "addSchool": "Yangi maktab",
+      "name": "Nomi",
       "selectRegion": "Tumanlarni ko'rish uchun viloyat tanlang",
       "selectDistrict": "Maktablarni ko'rish uchun tuman tanlang",
       "namePlaceholder": "Nomi",
       "delete": "O'chirish",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
+      "cancel": "Bekor qilish",
       "emptyRegions": "Viloyatlar yo'q",
       "emptyDistricts": "Tumanlar yo'q",
       "emptySchools": "Maktablar yo'q"
@@ -440,6 +465,7 @@
     "GEO_DISTRICT_MISMATCH": "Tanlangan tuman shu viloyatga tegishli emas",
     "GEO_SCHOOL_MISMATCH": "Tanlangan maktab shu tumanga tegishli emas",
     "GEO_INCOMPLETE": "Viloyat, tuman va maktab birgalikda to'ldirilishi kerak",
+    "GEO_SCHOOL_REQUIRED": "Maktabni ro'yxatdan tanlang yoki yangi maktab nomini kiriting",
     "SUBJECT_NAME_TAKEN": "Bu nomdagi fan allaqachon mavjud",
     "SUBJECT_NOT_FOUND": "Fan topilmadi",
     "REGION_NAME_TAKEN": "Bu nomdagi viloyat allaqachon mavjud",

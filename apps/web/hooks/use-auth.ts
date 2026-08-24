@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookie from 'js-cookie';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { AccessTokenOutput, SigninInput, SignupInput, UserOutput, VerifyEmailInput } from '@repo/contracts';
 import { TOKEN_COOKIE } from '@/lib/axios';
 import { queryKeys } from '@/lib/query-keys';
@@ -21,7 +21,12 @@ const storeToken = (token: AccessTokenOutput): void => {
 export const useSession = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const hasToken = typeof window !== 'undefined' && Boolean(Cookie.get(TOKEN_COOKIE));
+
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    setHasToken(Boolean(Cookie.get(TOKEN_COOKIE)));
+  }, []);
 
   const query = useQuery({
     queryKey: queryKeys.me,

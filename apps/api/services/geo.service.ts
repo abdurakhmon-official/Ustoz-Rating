@@ -148,6 +148,22 @@ export class GeoService {
     return { success: true, data: null };
   }
 
+  /** Ro'yxatdan o'tishda maktab ro'yxatda topilmasa, o'qituvchi kiritgan nom bilan yaratiladi (idempotent). */
+  async getOrCreateSchoolByName(districtId: string, regionId: string, name: string) {
+    await this.assertDistrictBelongsToRegion(districtId, regionId);
+
+    const trimmedName = name.trim();
+    const existing = await prisma.school.findUnique({
+      where: { districtId_name: { districtId, name: trimmedName } },
+    });
+    if (existing) return existing;
+
+    const school = await prisma.school.create({ data: { name: trimmedName, districtId, regionId } });
+    await this.auditService.log('CREATE', 'School', school.id, undefined, school);
+
+    return school;
+  }
+
   private async assertRegionExists(regionId: string): Promise<void> {
     const region = await prisma.region.findUnique({ where: { id: regionId }, select: { id: true } });
     if (!region) throw notFound('REGION_NOT_FOUND', 'region not found');

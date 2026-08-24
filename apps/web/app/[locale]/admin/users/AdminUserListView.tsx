@@ -61,8 +61,8 @@ export function AdminUserListView() {
         />
         <Select
           value={role}
-          onChange={(event) => {
-            setRole(event.target.value as UserRole | '');
+          onChange={(value) => {
+            setRole(value as UserRole | '');
             resetPage();
           }}
           className="max-w-40"
@@ -76,8 +76,8 @@ export function AdminUserListView() {
         </Select>
         <Select
           value={regionId}
-          onChange={(event) => {
-            setRegionId(event.target.value);
+          onChange={(value) => {
+            setRegionId(value);
             resetPage();
           }}
           className="max-w-44"
@@ -91,8 +91,8 @@ export function AdminUserListView() {
         </Select>
         <Select
           value={subjectId}
-          onChange={(event) => {
-            setSubjectId(event.target.value);
+          onChange={(value) => {
+            setSubjectId(value);
             resetPage();
           }}
           className="max-w-44"
@@ -155,7 +155,7 @@ function UserRow({ user, isSelf, onRoleChange, onActiveToggle, onDelete }: UserR
       </div>
       <div className="flex flex-wrap items-center gap-2">
         {/* `<option value>` ro'yxati pastda `ROLES`dan generatsiya qilinadi, shuning uchun qiymat doim shu union'ga mos. */}
-        <Select value={user.role} disabled={isSelf} onChange={(event) => onRoleChange(event.target.value as UserRole)} className="w-36">
+        <Select value={user.role} disabled={isSelf} onChange={(value) => onRoleChange(value as UserRole)} className="w-36">
           {ROLES.map((item) => (
             <option key={item} value={item}>
               {t(`role.${item}`)}

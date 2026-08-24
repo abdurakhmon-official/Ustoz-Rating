@@ -42,13 +42,13 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
 
   return (
     <html lang={locale} dir="ltr" className={cn('h-full antialiased', sans.variable, mono.variable)} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
+      <body className="flex min-h-screen flex-col font-sans bg-background text-foreground">
         <NextIntlClientProvider>
           <Providers>
             <MessageBridge />
             <EmailVerificationBanner />
             <Header />
-            {children}
+            <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
           </Providers>
         </NextIntlClientProvider>

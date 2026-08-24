@@ -15,6 +15,7 @@ export const uz: Record<MessageCode, string> = {
   GEO_DISTRICT_MISMATCH: 'Tanlangan tuman shu viloyatga tegishli emas',
   GEO_SCHOOL_MISMATCH: 'Tanlangan maktab shu tumanga tegishli emas',
   GEO_INCOMPLETE: 'Viloyat, tuman va maktab birgalikda to\'ldirilishi kerak',
+  GEO_SCHOOL_REQUIRED: 'Maktabni ro\'yxatdan tanlang yoki yangi maktab nomini kiriting',
   SUBJECT_NAME_TAKEN: 'Bu nomdagi fan allaqachon mavjud',
   SUBJECT_NOT_FOUND: 'Fan topilmadi',
   REGION_NAME_TAKEN: 'Bu nomdagi viloyat allaqachon mavjud',

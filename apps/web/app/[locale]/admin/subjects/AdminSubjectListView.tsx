@@ -6,48 +6,52 @@ import type { SubjectOutput } from '@repo/contracts';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
+import { FormField } from '@/components/ui/FormField';
 import { Input } from '@/components/ui/Input';
+import { Modal } from '@/components/ui/Modal';
 import { assetUrl } from '@/lib/utils';
 import { useUploadDirect } from '@/hooks/use-upload';
-import { useAdminSubjects, useCreateSubject, useDeleteSubject, useUpdateSubject } from '@/hooks/use-subjects';
+import { useAdminSubjects, useCreateSubject, useUpdateSubject } from '@/hooks/use-subjects';
 
 export function AdminSubjectListView() {
   const t = useTranslations('admin.subjects');
   const { data: subjects } = useAdminSubjects();
   const [adding, setAdding] = useState(false);
+  const [editingSubject, setEditingSubject] = useState<SubjectOutput | null>(null);
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">{t('title')}</h1>
-        <Button size="sm" onClick={() => setAdding((value) => !value)}>
+        <Button size="sm" onClick={() => setAdding(true)}>
           {t('add')}
         </Button>
       </div>
-
-      {adding && <SubjectForm onDone={() => setAdding(false)} />}
 
       {!subjects?.length ? (
         <p className="text-muted-foreground">{t('empty')}</p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {subjects.map((subject) => (
-            <SubjectCard key={subject.id} subject={subject} />
+            <SubjectCard key={subject.id} subject={subject} onEdit={() => setEditingSubject(subject)} />
           ))}
         </div>
       )}
+
+      <Modal open={adding} onClose={() => setAdding(false)} title={t('add')}>
+        <SubjectForm onDone={() => setAdding(false)} />
+      </Modal>
+
+      <Modal open={!!editingSubject} onClose={() => setEditingSubject(null)} title={t('edit')}>
+        {editingSubject && <SubjectForm subject={editingSubject} onDone={() => setEditingSubject(null)} />}
+      </Modal>
     </div>
   );
 }
 
-function SubjectCard({ subject }: { subject: SubjectOutput }) {
+function SubjectCard({ subject, onEdit }: { subject: SubjectOutput; onEdit: () => void }) {
   const t = useTranslations('admin.subjects');
-  const [editing, setEditing] = useState(false);
   const updateSubject = useUpdateSubject();
-
-  if (editing) {
-    return <SubjectForm subject={subject} onDone={() => setEditing(false)} />;
-  }
 
   return (
     <Card>
@@ -68,7 +72,7 @@ function SubjectCard({ subject }: { subject: SubjectOutput }) {
         </div>
 
         <div className="flex gap-2">
-          <Button size="sm" variant="outline" onClick={() => setEditing(true)}>
+          <Button size="sm" variant="outline" onClick={onEdit}>
             {t('edit')}
           </Button>
           <Button
@@ -120,37 +124,36 @@ function SubjectForm({ subject, onDone }: { subject?: SubjectOutput; onDone: () 
   };
 
   return (
-    <Card>
-      <CardContent className="py-4">
-        <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row sm:items-end">
-          <div className="flex flex-1 flex-col gap-1.5">
-            <label className="text-sm font-medium" htmlFor="subject-name">
-              {t('name')}
-            </label>
-            <Input id="subject-name" value={name} onChange={(event) => setName(event.target.value)} />
-          </div>
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <FormField label={t('name')} htmlFor="subject-name">
+        <Input id="subject-name" placeholder={t('namePlaceholder')} value={name} onChange={(event) => setName(event.target.value)} autoFocus />
+      </FormField>
 
-          <div className="flex items-center gap-2">
-            <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={onImageSelected} />
-            <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
-              {t('image')}
-            </Button>
-            {imageKey && (
+      <FormField label={t('image')} htmlFor="subject-image">
+        <div className="flex items-center gap-3">
+          <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-accent text-accent-foreground">
+            {imageKey ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={assetUrl(imageKey)} alt="" className="size-9 rounded object-cover" />
+              <img src={assetUrl(imageKey)} alt="" className="size-full object-cover" />
+            ) : (
+              <span className="text-xs text-muted-foreground">{t('noImage')}</span>
             )}
           </div>
+          <input ref={fileInputRef} id="subject-image" type="file" accept="image/*" className="hidden" onChange={onImageSelected} />
+          <Button type="button" variant="outline" size="sm" disabled={upload.isPending} onClick={() => fileInputRef.current?.click()}>
+            {t('changeImage')}
+          </Button>
+        </div>
+      </FormField>
 
-          <div className="flex gap-2">
-            <Button type="submit" size="sm" disabled={isPending}>
-              {t('save')}
-            </Button>
-            <Button type="button" variant="ghost" size="sm" onClick={onDone}>
-              {t('cancel')}
-            </Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+      <div className="mt-2 flex justify-end gap-2 border-t border-border pt-4">
+        <Button type="button" variant="ghost" size="sm" onClick={onDone}>
+          {t('cancel')}
+        </Button>
+        <Button type="submit" size="sm" disabled={isPending}>
+          {isPending ? t('saving') : t('save')}
+        </Button>
+      </div>
+    </form>
   );
 }

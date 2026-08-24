@@ -58,6 +58,8 @@ export function ProfileView() {
 
   const regionId = watch('regionId');
   const districtId = watch('districtId');
+  const schoolId = watch('schoolId');
+  const subjectId = watch('subjectId');
   const gender = watch('gender');
 
   const { data: regions } = useRegions();
@@ -152,7 +154,7 @@ export function ProfileView() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField label={tAuth('fields.region')} htmlFor="regionId" error={errors.regionId?.message}>
-                <Select id="regionId" value={regionId ?? ''} onChange={(event) => onRegionChange(event.target.value)}>
+                <Select id="regionId" value={regionId ?? ''} onChange={onRegionChange}>
                   <option value="">{tAuth('fields.selectPlaceholder')}</option>
                   {regions?.map((region) => (
                     <option key={region.id} value={region.id}>
@@ -163,7 +165,7 @@ export function ProfileView() {
               </FormField>
 
               <FormField label={tAuth('fields.district')} htmlFor="districtId" error={errors.districtId?.message}>
-                <Select id="districtId" disabled={!regionId} value={districtId ?? ''} onChange={(event) => onDistrictChange(event.target.value)}>
+                <Select id="districtId" disabled={!regionId} value={districtId ?? ''} onChange={onDistrictChange}>
                   <option value="">{tAuth('fields.selectPlaceholder')}</option>
                   {districts?.map((district) => (
                     <option key={district.id} value={district.id}>
@@ -175,7 +177,7 @@ export function ProfileView() {
             </div>
 
             <FormField label={tAuth('fields.school')} htmlFor="schoolId" error={errors.schoolId?.message}>
-              <Select id="schoolId" disabled={!districtId} {...register('schoolId')}>
+              <Select id="schoolId" disabled={!districtId} value={schoolId ?? ''} onChange={(value) => setValue('schoolId', value)}>
                 <option value="">{tAuth('fields.selectPlaceholder')}</option>
                 {schools?.map((school) => (
                   <option key={school.id} value={school.id}>
@@ -187,7 +189,7 @@ export function ProfileView() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField label={tAuth('fields.subject')} htmlFor="subjectId" error={errors.subjectId?.message}>
-                <Select id="subjectId" {...register('subjectId')}>
+                <Select id="subjectId" value={subjectId ?? ''} onChange={(value) => setValue('subjectId', value)}>
                   <option value="">{tAuth('fields.selectPlaceholder')}</option>
                   {subjects?.map((subject) => (
                     <option key={subject.id} value={subject.id}>

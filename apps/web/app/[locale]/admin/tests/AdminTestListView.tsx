@@ -49,8 +49,8 @@ export function AdminTestListView() {
         />
         <Select
           value={subjectId}
-          onChange={(event) => {
-            setSubjectId(event.target.value);
+          onChange={(value) => {
+            setSubjectId(value);
             setPage(1);
           }}
           className="max-w-48"
@@ -64,8 +64,8 @@ export function AdminTestListView() {
         </Select>
         <Select
           value={status}
-          onChange={(event) => {
-            setStatus(event.target.value as TestStatus | '');
+          onChange={(value) => {
+            setStatus(value as TestStatus | '');
             setPage(1);
           }}
           className="max-w-44"

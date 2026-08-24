@@ -1,6 +1,6 @@
 'use client';
 
-import { LayoutGrid, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
@@ -8,6 +8,7 @@ import { GlobalSearch } from '@/components/layout/GlobalSearch';
 import { NotificationBell } from '@/components/layout/NotificationBell';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
+import { Logo } from '@/components/ui/Logo';
 import { useSession, useSignOut } from '@/hooks/use-auth';
 
 export function Header() {
@@ -22,9 +23,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2.5 font-bold tracking-tight" onClick={closeMenu}>
-          <span className="flex size-8.5 shrink-0 items-center justify-center rounded-[9px] bg-primary">
-            <LayoutGrid className="size-4.5 text-primary-foreground" />
-          </span>
+          <Logo className="size-8.5 text-base" />
           <span className="truncate">{t('brand')}</span>
         </Link>
 

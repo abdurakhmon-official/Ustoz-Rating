@@ -37,7 +37,10 @@ export async function sendMail(message: MailMessage): Promise<void> {
   if (!config.mail.host) {
     console.info(`[mail:dev] ${message.to} — ${message.subject}`);
     console.info(result.message?.toString?.() ?? '');
+    return;
   }
+
+  console.info(`[mail:sent] to=${message.to} accepted=${JSON.stringify(result.accepted)} rejected=${JSON.stringify(result.rejected)} response=${result.response}`);
 }
 
 export async function verifyMailer(): Promise<boolean> {

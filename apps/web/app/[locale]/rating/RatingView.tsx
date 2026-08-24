@@ -57,8 +57,8 @@ export function RatingView() {
       <div className="flex flex-wrap gap-3">
         <Select
           value={regionId}
-          onChange={(event) => {
-            setRegionId(event.target.value);
+          onChange={(value) => {
+            setRegionId(value);
             setDistrictId('');
             setSchoolId('');
             resetPage();
@@ -76,8 +76,8 @@ export function RatingView() {
         <Select
           value={districtId}
           disabled={!regionId}
-          onChange={(event) => {
-            setDistrictId(event.target.value);
+          onChange={(value) => {
+            setDistrictId(value);
             setSchoolId('');
             resetPage();
           }}
@@ -94,8 +94,8 @@ export function RatingView() {
         <Select
           value={schoolId}
           disabled={!districtId}
-          onChange={(event) => {
-            setSchoolId(event.target.value);
+          onChange={(value) => {
+            setSchoolId(value);
             resetPage();
           }}
           className="max-w-44"
@@ -110,8 +110,8 @@ export function RatingView() {
 
         <Select
           value={subjectId}
-          onChange={(event) => {
-            setSubjectId(event.target.value);
+          onChange={(value) => {
+            setSubjectId(value);
             resetPage();
           }}
           className="max-w-44"
@@ -126,8 +126,8 @@ export function RatingView() {
 
         <Select
           value={gender}
-          onChange={(event) => {
-            setGender(event.target.value);
+          onChange={(value) => {
+            setGender(value);
             resetPage();
           }}
           className="max-w-36"
@@ -151,8 +151,8 @@ export function RatingView() {
 
         <Select
           value={period}
-          onChange={(event) => {
-            setPeriod(event.target.value as RatingPeriod);
+          onChange={(value) => {
+            setPeriod(value as RatingPeriod);
             resetPage();
           }}
           className="max-w-36"

@@ -24,9 +24,13 @@ export function TestInfoCard({ test }: { test: AdminTestDetail }) {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     reset,
     formState: { errors },
   } = useForm<UpdateTestInput>({ resolver: zodResolver(UpdateTestInputSchema) });
+
+  const subjectId = watch('subjectId');
 
   useEffect(() => {
     reset({
@@ -63,7 +67,7 @@ export function TestInfoCard({ test }: { test: AdminTestDetail }) {
           </FormField>
 
           <FormField label={t('fields.subject')} htmlFor="subjectId" error={errors.subjectId?.message}>
-            <Select id="subjectId" {...register('subjectId')}>
+            <Select id="subjectId" value={subjectId ?? ''} onChange={(value) => setValue('subjectId', value)}>
               <option value="">{tAuth('fields.selectPlaceholder')}</option>
               {subjects?.map((subject) => (
                 <option key={subject.id} value={subject.id}>

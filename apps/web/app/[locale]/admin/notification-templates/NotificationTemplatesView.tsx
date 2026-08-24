@@ -1,17 +1,34 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
-import type { NotificationTemplateItem } from '@repo/contracts';
+import { useRef, useState } from 'react';
+import type { NotificationTemplateItem, NotificationType } from '@repo/contracts';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { PlaceholderPicker } from '@/components/ui/PlaceholderPicker';
+import { TemplatePreview } from '@/components/ui/TemplatePreview';
 import { Textarea } from '@/components/ui/Textarea';
 import { useNotificationTemplates, useUpdateNotificationTemplate } from '@/hooks/use-notifications';
+
+const TYPE_PLACEHOLDER_TOKENS: Record<NotificationType, string[]> = {
+  TEST_PUBLISHED: ['subject', 'title'],
+  ATTEMPT_RESULT: ['title', 'score', 'status'],
+  RATING_CHANGED: ['delta'],
+  CERTIFICATE_ISSUED: ['subject', 'score'],
+};
+
+const TYPE_PREVIEW_VALUES: Record<NotificationType, Record<string, string | number>> = {
+  TEST_PUBLISHED: { subject: 'Matematika', title: 'Nazorat ishi' },
+  ATTEMPT_RESULT: { title: 'Nazorat ishi', score: 87, status: "o'tdi" },
+  RATING_CHANGED: { delta: 3 },
+  CERTIFICATE_ISSUED: { subject: 'Matematika', score: 94 },
+};
 
 function TemplateCard({ template }: { template: NotificationTemplateItem }) {
   const t = useTranslations('admin.notificationTemplates');
   const updateTemplate = useUpdateNotificationTemplate();
   const [text, setText] = useState(template.text);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -25,8 +42,15 @@ function TemplateCard({ template }: { template: NotificationTemplateItem }) {
       </CardHeader>
       <CardContent>
         <form onSubmit={onSubmit} className="flex flex-col gap-3">
-          <Textarea rows={3} value={text} onChange={(event) => setText(event.target.value)} />
-          <p className="text-sm text-muted-foreground">{t(`hint.${template.type}`)}</p>
+          <Textarea ref={textareaRef} rows={3} value={text} onChange={(event) => setText(event.target.value)} />
+          <p className="text-sm text-muted-foreground">{t('hint')}</p>
+          <PlaceholderPicker
+            textareaRef={textareaRef}
+            value={text}
+            onChange={setText}
+            placeholders={TYPE_PLACEHOLDER_TOKENS[template.type].map((token) => ({ token, label: t(`placeholders.${token}`) }))}
+          />
+          <TemplatePreview text={text} values={TYPE_PREVIEW_VALUES[template.type]} label={t('preview')} />
           <Button type="submit" size="sm" disabled={updateTemplate.isPending} className="self-start">
             {t('save')}
           </Button>

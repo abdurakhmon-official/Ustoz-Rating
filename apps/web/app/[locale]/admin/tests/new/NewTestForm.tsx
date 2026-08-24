@@ -25,9 +25,13 @@ export function NewTestForm() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     setError,
     formState: { errors },
   } = useForm<CreateTestInput>({ resolver: zodResolver(CreateTestInputSchema) });
+
+  const subjectId = watch('subjectId');
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -52,7 +56,7 @@ export function NewTestForm() {
             </FormField>
 
             <FormField label={t('fields.subject')} htmlFor="subjectId" error={errors.subjectId?.message}>
-              <Select id="subjectId" {...register('subjectId')}>
+              <Select id="subjectId" value={subjectId ?? ''} onChange={(value) => setValue('subjectId', value)}>
                 <option value="">{tAuth('fields.selectPlaceholder')}</option>
                 {subjects?.map((subject) => (
                   <option key={subject.id} value={subject.id}>

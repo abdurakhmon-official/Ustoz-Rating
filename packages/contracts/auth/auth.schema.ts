@@ -16,6 +16,9 @@ const assertNotDerived = (password: string, ...parts: (string | null | undefined
   });
 };
 
+/** Bo'sh string kelsa (masalan reset qilingan `<select>` yoki tozalangan forma maydoni) `undefined` sifatida ko'radi — aks holda `.optional()` uni "berilmagan" deb hisoblamaydi. */
+const emptyToUndefined = (schema: z.ZodTypeAny) => z.preprocess((value) => (value === '' ? undefined : value), schema);
+
 export const SignupInputSchema = z
   .object({
     fullName: z.string().min(1),
@@ -25,11 +28,16 @@ export const SignupInputSchema = z
     gender: GenderSchema,
     regionId: z.string().uuid(),
     districtId: z.string().uuid(),
-    schoolId: z.string().uuid(),
+    schoolId: emptyToUndefined(z.string().uuid().optional()),
+    schoolName: emptyToUndefined(z.string().trim().min(1).max(200).optional()),
     subjectId: z.string().uuid(),
     position: z.string().min(1),
     experienceYears: z.coerce.number().int().min(0).max(60),
     locale: LocaleSchema.default(DEFAULT_LOCALE),
+  })
+  .refine((input) => Boolean(input.schoolId) !== Boolean(input.schoolName), {
+    message: 'GEO_SCHOOL_REQUIRED',
+    path: ['schoolId'],
   })
   .refine((input) => assertNotDerived(input.password, input.email, input.fullName), {
     message: 'VALIDATION_PASSWORD_PERSONAL',
