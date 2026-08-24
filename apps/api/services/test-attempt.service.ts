@@ -7,6 +7,7 @@ import { badRequest, forbidden, notFound, requireUserId } from '@/utils/errors.u
 import { gradeAttempt } from '@/utils/scoring.utils';
 import { uz } from '@/i18n/messages/uz.messages';
 import { CertificateService } from '@/services/certificate.service';
+import { NotificationService } from '@/services/notification.service';
 import { TEST_STATUS, Prisma } from '../generated/prisma';
 import type { StartAttemptInput, SubmitAttemptInput } from '@/inputs/test-attempt.input';
 
@@ -19,6 +20,9 @@ export class TestAttemptService {
 
   @Inject()
   private certificateService!: CertificateService;
+
+  @Inject()
+  private notificationService!: NotificationService;
 
   private get user() {
     return this.context.getRequest<Request>().user;
@@ -138,6 +142,12 @@ export class TestAttemptService {
         timeSpentSeconds: Math.min(elapsedSeconds, allowedSeconds),
         submittedAt: new Date(),
       },
+    });
+
+    await this.notificationService.notify(this.teacherId, 'ATTEMPT_RESULT', {
+      title: test.title,
+      score: result.score,
+      status: result.passed ? "o'tdi" : "o'tmadi",
     });
 
     if (result.passed && this.user) {

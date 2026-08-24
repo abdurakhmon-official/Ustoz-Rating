@@ -8,3 +8,4 @@ export * from './test/test.schema';
 export * from './test-attempt/test-attempt.schema';
 export * from './rating/rating.schema';
 export * from './certificate/certificate.schema';
+export * from './notification/notification.schema';

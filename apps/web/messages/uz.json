@@ -21,6 +21,22 @@
   "footer": {
     "copyright": "© {year} Ustoz Rating"
   },
+  "notifications": {
+    "title": "Bildirishnomalar",
+    "empty": "Hozircha bildirishnoma yo'q"
+  },
+  "search": {
+    "placeholder": "Qidirish…",
+    "loading": "Qidirilmoqda…",
+    "empty": "Hech narsa topilmadi",
+    "groups": {
+      "teachers": "O'qituvchilar",
+      "schools": "Maktablar",
+      "subjects": "Fanlar",
+      "districts": "Tumanlar",
+      "regions": "Viloyatlar"
+    }
+  },
   "auth": {
     "fields": {
       "fullName": "F.I.Sh.",
@@ -196,7 +212,8 @@
       "subjects": "Fanlar",
       "geo": "Hudud",
       "ratingSettings": "Reyting sozlamalari",
-      "certificateTemplate": "Sertifikat shabloni"
+      "certificateTemplate": "Sertifikat shabloni",
+      "notificationTemplates": "Bildirishnoma shablonlari"
     },
     "ratingSettings": {
       "title": "Reyting formulasi",
@@ -212,6 +229,22 @@
       "hint": "Quyidagi joy egallovchilardan foydalanishingiz mumkin: '{'fullName'}', '{'subject'}', '{'score'}'",
       "text": "Shablon matni",
       "save": "Saqlash"
+    },
+    "notificationTemplates": {
+      "title": "Bildirishnoma shablonlari",
+      "save": "Saqlash",
+      "type": {
+        "TEST_PUBLISHED": "Yangi test joylandi",
+        "ATTEMPT_RESULT": "Test natijasi",
+        "RATING_CHANGED": "Reyting o'zgardi",
+        "CERTIFICATE_ISSUED": "Sertifikat berildi"
+      },
+      "hint": {
+        "TEST_PUBLISHED": "Joy egallovchilar: '{'subject'}', '{'title'}'",
+        "ATTEMPT_RESULT": "Joy egallovchilar: '{'title'}', '{'score'}', '{'status'}'",
+        "RATING_CHANGED": "Joy egallovchilar: '{'delta'}'",
+        "CERTIFICATE_ISSUED": "Joy egallovchilar: '{'subject'}', '{'score'}'"
+      }
     },
     "users": {
       "title": "O'qituvchilar",
@@ -374,6 +407,8 @@
     "ATTEMPT_SUBMITTED": "Test natijasi qabul qilindi",
     "CERTIFICATE_NOT_FOUND": "Sertifikat topilmadi",
     "FILE_UPLOADED": "Fayl yuklandi",
+    "NOTIFICATION_NOT_FOUND": "Bildirishnoma topilmadi",
+    "NOTIFICATION_FORBIDDEN": "Bu bildirishnoma sizga tegishli emas",
     "VALIDATION_PASSWORD_SHORT": "Parol juda qisqa",
     "VALIDATION_PASSWORD_LONG": "Parol juda uzun",
     "VALIDATION_PASSWORD_PERSONAL": "Parol ismingiz yoki emailingizni o'z ichiga olmasligi kerak",

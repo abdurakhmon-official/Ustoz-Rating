@@ -4,6 +4,8 @@ import { LayoutGrid, Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
+import { GlobalSearch } from '@/components/layout/GlobalSearch';
+import { NotificationBell } from '@/components/layout/NotificationBell';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { useSession, useSignOut } from '@/hooks/use-auth';
@@ -26,8 +28,15 @@ export function Header() {
           <span className="truncate">{t('brand')}</span>
         </Link>
 
+        {isAuthenticated && (
+          <div className="hidden flex-1 justify-center px-4 md:flex">
+            <GlobalSearch />
+          </div>
+        )}
+
         <div className="hidden items-center gap-3 sm:flex">
           <ThemeToggle />
+          {isAuthenticated && <NotificationBell />}
 
           <Link href="/rating">
             <Button variant="ghost" size="sm">

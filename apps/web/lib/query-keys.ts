@@ -23,4 +23,7 @@ export const queryKeys = {
   myCertificates: ['my-certificates'] as const,
   certificate: (certificateId: string) => ['certificate', certificateId] as const,
   certificateTemplate: ['certificate-template'] as const,
+  notifications: ['notifications'] as const,
+  notificationTemplates: ['notification-templates'] as const,
+  search: (q: string) => ['search', q] as const,
 };

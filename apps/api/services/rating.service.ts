@@ -101,6 +101,12 @@ export class RatingService {
     };
   }
 
+  /** Respublika darajasidagi joriy o'rinlar — davriy reyting-o'zgarish bildirishnomasi uchun. */
+  async republicRanks(): Promise<{ teacherId: string; rank: number }[]> {
+    const ranked = await this.computeRankings({});
+    return ranked.map((teacher, index) => ({ teacherId: teacher.teacherId, rank: index + 1 }));
+  }
+
   private findRank(ranked: RankedTeacher[], teacherId: string): number | null {
     const index = ranked.findIndex((entry) => entry.teacherId === teacherId);
     return index === -1 ? null : index + 1;

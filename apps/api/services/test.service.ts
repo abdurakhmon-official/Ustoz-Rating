@@ -3,6 +3,7 @@ import { AdminTestQuerySchema } from '@repo/contracts';
 import prisma from '@/modules/db';
 import { badRequest, notFound } from '@/utils/errors.utils';
 import { AuditService } from '@/services/audit.service';
+import { NotificationService } from '@/services/notification.service';
 import type { CreateTestInput, UpdateTestInput } from '@/inputs/test.input';
 import { TEST_STATUS } from '../generated/prisma';
 
@@ -36,6 +37,9 @@ export class TestService {
 
   @Inject()
   private auditService!: AuditService;
+
+  @Inject()
+  private notificationService!: NotificationService;
 
   async adminList(rawQuery: unknown) {
     const { subjectId, status, search, page, size } = AdminTestQuerySchema.parse(rawQuery);
@@ -103,7 +107,26 @@ export class TestService {
     const test = await prisma.test.update({ where: { id: testId }, data: input, select: TestService.DETAIL_SELECT });
     await this.auditService.log('UPDATE', 'Test', testId, before, test);
 
+    if (before.status !== TEST_STATUS.PUBLISHED && test.status === TEST_STATUS.PUBLISHED) {
+      await this.notifySubjectSubscribers(test.subjectId, test.title);
+    }
+
     return { success: true, data: test };
+  }
+
+  private async notifySubjectSubscribers(subjectId: string, title: string): Promise<void> {
+    const [subject, teachers] = await Promise.all([
+      prisma.subject.findUnique({ where: { id: subjectId }, select: { name: true } }),
+      prisma.user.findMany({ where: { subjectId, active: true, deletedAt: null }, select: { id: true } }),
+    ]);
+
+    if (!subject || teachers.length === 0) return;
+
+    await this.notificationService.notifyMany(
+      teachers.map((teacher) => teacher.id),
+      'TEST_PUBLISHED',
+      { subject: subject.name, title },
+    );
   }
 
   async delete(testId: string) {

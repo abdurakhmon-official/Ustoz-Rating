@@ -5,6 +5,7 @@ import prisma from '@/modules/db';
 import { notFound, requireUserId } from '@/utils/errors.utils';
 import { generateCertificateId, renderCertificateTemplate } from '@/utils/certificate.utils';
 import { CertificateTemplateService } from '@/services/certificate-template.service';
+import { NotificationService } from '@/services/notification.service';
 import type { CertificateListItem, CertificateOutput } from '@repo/contracts';
 
 interface IssueInput {
@@ -24,23 +25,38 @@ export class CertificateService {
   @Inject()
   private certificateTemplateService!: CertificateTemplateService;
 
+  @Inject()
+  private notificationService!: NotificationService;
+
   private get teacherId(): string {
     return requireUserId(this.context.getRequest<Request>().user);
   }
 
+  /** attemptId'ga unique constraint borligi sababli idempotent — takror chaqirilsa ham faqat bitta sertifikat va bitta bildirishnoma yaratiladi. */
   async checkAndIssue(input: IssueInput): Promise<void> {
-    await prisma.certificate.upsert({
-      where: { attemptId: input.attemptId },
-      update: {},
-      create: {
-        certificateId: generateCertificateId(),
-        attemptId: input.attemptId,
-        teacherId: input.teacherId,
-        testId: input.testId,
-        teacherName: input.teacherName,
-        subjectName: input.subjectName,
-        score: input.score,
-      },
+    const existing = await prisma.certificate.findUnique({ where: { attemptId: input.attemptId }, select: { id: true } });
+    if (existing) return;
+
+    try {
+      await prisma.certificate.create({
+        data: {
+          certificateId: generateCertificateId(),
+          attemptId: input.attemptId,
+          teacherId: input.teacherId,
+          testId: input.testId,
+          teacherName: input.teacherName,
+          subjectName: input.subjectName,
+          score: input.score,
+        },
+      });
+    } catch (error) {
+      if ((error as { code?: string }).code === 'P2002') return;
+      throw error;
+    }
+
+    await this.notificationService.notify(input.teacherId, 'CERTIFICATE_ISSUED', {
+      subject: input.subjectName,
+      score: input.score,
     });
   }
 

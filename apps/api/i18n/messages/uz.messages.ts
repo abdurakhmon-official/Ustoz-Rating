@@ -44,6 +44,8 @@ export const uz: Record<MessageCode, string> = {
   ATTEMPT_SUBMITTED: 'Test natijasi qabul qilindi',
   CERTIFICATE_NOT_FOUND: 'Sertifikat topilmadi',
   FILE_UPLOADED: 'Fayl yuklandi',
+  NOTIFICATION_NOT_FOUND: 'Bildirishnoma topilmadi',
+  NOTIFICATION_FORBIDDEN: 'Bu bildirishnoma sizga tegishli emas',
   VALIDATION_PASSWORD_SHORT: 'Parol juda qisqa',
   VALIDATION_PASSWORD_LONG: 'Parol juda uzun',
   VALIDATION_PASSWORD_PERSONAL: 'Parol ismingiz yoki emailingizni o\'z ichiga olmasligi kerak',

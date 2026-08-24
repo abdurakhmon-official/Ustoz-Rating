@@ -19,6 +19,7 @@ import bearerToken from 'express-bearer-token';
 import { logging } from './middlewares/logging.middleware';
 import { get404 } from './middlewares/404.middleware';
 import './middlewares/error.middleware';
+import { RatingNotificationWorker } from './worker/rating-notification.worker';
 
 const API_ROOT = config.apiRoot;
 
@@ -70,6 +71,9 @@ export class Server {
 
   @Configuration()
   protected settings!: Configuration;
+
+  @Inject()
+  private ratingNotificationWorker!: RatingNotificationWorker;
 
   $beforeRoutesInit() {
     this.app.rawApp.set('trust proxy', 1);

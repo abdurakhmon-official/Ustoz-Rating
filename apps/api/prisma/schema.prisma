@@ -30,6 +30,13 @@ enum TEST_STATUS {
   PUBLISHED
 }
 
+enum NOTIFICATION_TYPE {
+  TEST_PUBLISHED
+  ATTEMPT_RESULT
+  RATING_CHANGED
+  CERTIFICATE_ISSUED
+}
+
 model User {
   id                String    @id @default(uuid())
   fullName          String    @map("full_name")
@@ -60,8 +67,9 @@ model User {
   school   School?   @relation(fields: [schoolId], references: [id], onDelete: SetNull)
   subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: SetNull)
 
-  testAttempts TestAttempt[]
-  certificates Certificate[]
+  testAttempts  TestAttempt[]
+  certificates  Certificate[]
+  notifications Notification[]
 
   @@index([email])
   @@index([regionId])
@@ -195,7 +203,6 @@ model TestAttempt {
   @@map("test_attempts")
 }
 
-/// Yagona qator (singleton) — admin panelidan tahrirlanadi, Redis'da keshlanadi.
 model RatingSettings {
   id                 String   @id @default(uuid())
   avgScoreWeight     Float    @default(0.4) @map("avg_score_weight")
@@ -227,13 +234,37 @@ model Certificate {
   @@map("certificates")
 }
 
-/// Yagona qator (singleton) — sertifikat matni placeholder bilan, admin tahrirlaydi.
+/// Yagona qator (singleton) — matn shabloni kodda emas, `CertificateTemplateService.getOrCreateRow()` orqali ma'lumotlar bazasida seed qilinadi.
 model CertificateTemplate {
   id        String   @id @default(uuid())
-  text      String   @default("Ushbu sertifikat {fullName} {subject} fanidan bilim testini {score}% natija bilan muvaffaqiyatli topshirganligini tasdiqlaydi.")
+  text      String
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("certificate_templates")
+}
+
+model Notification {
+  id        String            @id @default(uuid())
+  userId    String            @map("user_id")
+  type      NOTIFICATION_TYPE
+  text      String
+  read      Boolean           @default(false)
+  createdAt DateTime          @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+  @@map("notifications")
+}
+
+/// Har bir bildirishnoma turi uchun bitta qator — matn shabloni placeholder bilan, admin tahrirlaydi.
+model NotificationTemplate {
+  id        String            @id @default(uuid())
+  type      NOTIFICATION_TYPE @unique
+  text      String
+  updatedAt DateTime          @updatedAt @map("updated_at")
+
+  @@map("notification_templates")
 }
 
 model AuditLog {

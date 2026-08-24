@@ -16,6 +16,7 @@ export function AdminSubNav() {
     { href: '/admin/geo', label: t('geo') },
     { href: '/admin/rating-settings', label: t('ratingSettings') },
     { href: '/admin/certificate-template', label: t('certificateTemplate') },
+    { href: '/admin/notification-templates', label: t('notificationTemplates') },
   ] as const;
 
   return (

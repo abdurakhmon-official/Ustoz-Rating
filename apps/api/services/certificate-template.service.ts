@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@tsed/di';
 import prisma from '@/modules/db';
 import { AuditService } from '@/services/audit.service';
+import { DEFAULT_CERTIFICATE_TEMPLATE_TEXT } from '@/utils/certificate.utils';
 import type { CertificateTemplateOutput, UpdateCertificateTemplateInput } from '@repo/contracts';
 
 @Injectable()
@@ -30,6 +31,6 @@ export class CertificateTemplateService {
     const existing = await prisma.certificateTemplate.findFirst();
     if (existing) return existing;
 
-    return prisma.certificateTemplate.create({ data: {} });
+    return prisma.certificateTemplate.create({ data: { text: DEFAULT_CERTIFICATE_TEMPLATE_TEXT } });
   }
 }
