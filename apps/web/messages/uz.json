@@ -12,6 +12,48 @@
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish"
   },
+  "dashboard": {
+    "teacher": {
+      "title": "Bosh sahifa",
+      "stats": {
+        "republicRank": "Respublika reytingi",
+        "regionRank": "Viloyat reytingi",
+        "avgScore": "O'rtacha natija",
+        "bestScore": "Eng yuqori natija",
+        "attemptCount": "Topshirgan testlar",
+        "certificateCount": "Sertifikatlar"
+      },
+      "chartTitle": "So'nggi natijalar",
+      "chartEmpty": "Hali natijalar yo'q",
+      "topTitle": "TOP 10 (fanim bo'yicha)",
+      "topEmpty": "Reytingda hali hech kim yo'q",
+      "testsTitle": "Mavjud testlar",
+      "testsViewAll": "Barchasini ko'rish",
+      "testsEmpty": "Hozircha testlar yo'q",
+      "testsStart": "Testni boshlash",
+      "cta": {
+        "title": "Bilimingizni sinang",
+        "subtitle": "Yangi test topshiring va reytingda o'z o'rningizni mustahkamlang.",
+        "button": "Testlarni ko'rish"
+      }
+    },
+    "admin": {
+      "title": "Boshqaruv paneli",
+      "stats": {
+        "teacherCount": "O'qituvchilar",
+        "subjectCount": "Fanlar",
+        "testCount": "Testlar",
+        "questionCount": "Savollar",
+        "todaySubmissions": "Bugun topshirilgan",
+        "avgScore": "O'rtacha ball"
+      },
+      "teacherGrowthTitle": "O'qituvchilar dinamikasi (14 kun)",
+      "submissionsTitle": "Test topshirishlar (14 kun)",
+      "scoresBySubjectTitle": "Fanlar bo'yicha o'rtacha ball",
+      "scoresByRegionTitle": "Viloyatlar bo'yicha o'rtacha ball",
+      "chartEmpty": "Ma'lumot yo'q"
+    }
+  },
   "home": {
     "title": "O'qituvchilar bilimini aniqlash va reyting platformasi",
     "subtitle": "Fanlar bo'yicha bilim testlarini topshiring, natijangizni ko'ring va respublika reytingida o'rningizni egallang.",
@@ -207,6 +249,7 @@
   },
   "admin": {
     "nav": {
+      "dashboard": "Boshqaruv paneli",
       "users": "O'qituvchilar",
       "tests": "Testlar",
       "subjects": "Fanlar",

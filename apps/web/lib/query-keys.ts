@@ -26,4 +26,6 @@ export const queryKeys = {
   notifications: ['notifications'] as const,
   notificationTemplates: ['notification-templates'] as const,
   search: (q: string) => ['search', q] as const,
+  teacherDashboard: ['teacher-dashboard'] as const,
+  adminDashboard: ['admin-dashboard'] as const,
 };
