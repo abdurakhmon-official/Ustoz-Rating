@@ -94,6 +94,13 @@ export const validateConfig = (): Check[] => {
     checks.push({ level: 'error', message: 'WEB_URL still points at localhost' });
   }
 
+  if (isProduction && (!process.env.PUBLIC_URL || config.publicUrl.includes('localhost'))) {
+    checks.push({
+      level: 'error',
+      message: 'PUBLIC_URL is not set to the deployed API URL — every image/file link served to the frontend would point at localhost',
+    });
+  }
+
   return checks;
 };
 
